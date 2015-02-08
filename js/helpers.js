@@ -10,29 +10,6 @@ TODOTabs.Helpers = {
         return dropdown.value;
     },
 
-    openAllTodos: function() {
-        TODOTabs.TodoList.getTodos(function(todos) {
-            var id = TODOTabs.Helpers.getCurrentTodoId(),
-                currentTodo = {};
-            
-            // get currently selected todo
-            todos.allTodos.forEach(function(todo) {
-                if (todo.id == id) {
-                    currentTodo = todo;
-                }
-            });
-
-            // open all Todo tabs in new window
-            if (currentTodo.tabs && currentTodo.tabs.length) {
-                var tabsArr = currentTodo.tabs.map(function(tab) {
-                    return tab.url;
-                });
-
-                chrome.windows.create({ url: tabsArr }, function() {});
-            }
-        });
-    },
-
     validateTodoName: function() {
         var name = prompt("List name");
 

@@ -12,7 +12,7 @@ TODOTabs.Init = {
 
         // open todo tabs
         var btnOpenAllTodos = document.getElementById('openAllTodos');
-        btnOpenAllTodos.addEventListener('click', TODOTabs.Helpers.openAllTodos);
+        btnOpenAllTodos.addEventListener('click', TODOTabs.View.openAllTodos);
 
         // toggle lists
         var dropdown = document.getElementById('todoDropdown');
