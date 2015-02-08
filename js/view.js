@@ -13,7 +13,7 @@ TODOTabs.View = {
                         listHtml = '',
                         listWrapper = document.createElement('div');
 
-                    listWrapper.setAttribute('class', 'list');
+                    listWrapper.setAttribute('class', 'todo');
                     listWrapper.setAttribute('id', todo.id);
 
                     listHtml += '<h3>' + todo.name + '</h3>';
@@ -24,9 +24,12 @@ TODOTabs.View = {
                         var title = decodeURI(tab.title),
                             domain = tab.url.split('/')[2];
 
-                        listHtml += '<li><label>';
+                        listHtml += '<li>';
+                        listHtml += '<div class="item-actions"><a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a></div>';
+                        listHtml += '<label>';
                         listHtml += '<input type="checkbox" value="" /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span>';
-                        listHtml += '</label></li>'
+                        listHtml += '</label>'
+                        listHtml += '</li>'
                     });
 
                     listHtml += '</ul>';
