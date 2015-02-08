@@ -2,7 +2,7 @@ var TODOTabs = TODOTabs || {};
 
 TODOTabs.View = {
     updateListHtml: function() {
-        var listEl = document.getElementById('savedTodos');
+        var listEl = document.getElementById('todoLists');
         listEl.innerHTML = '';
 
         TODOTabs.TodoList.getTodos(function(todos) {
@@ -28,8 +28,8 @@ TODOTabs.View = {
                         listHtml += '<div class="item-actions"><a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a></div>';
                         listHtml += '<label>';
                         listHtml += '<input type="checkbox" value="" /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span>';
-                        listHtml += '</label>'
-                        listHtml += '</li>'
+                        listHtml += '</label>';
+                        listHtml += '</li>';
                     });
 
                     listHtml += '</ul>';
@@ -63,13 +63,13 @@ TODOTabs.View = {
 
     toggleLists: function() {
         var id = this.value,
-            todoLists = document.querySelectorAll('#savedTodos .list');
+            todoLists = document.querySelectorAll('#todoLists .todo');
 
-        [].forEach.call(todoLists, function(list) {
-            list.style.display = 'none';
+        [].forEach.call(todoLists, function(todo) {
+            todo.style.display = 'none';
         });
         document.getElementById(id).style.display = 'block';
-    },
+    }
 
     //showLatestTodo: function() {
     //    var dropdown = document.getElementById('#todoDropdown');

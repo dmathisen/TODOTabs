@@ -6,22 +6,22 @@
     <link href="css/font-awesome-4.3.0.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div id="mainPopup">
+    <div class="main-popup">
         <h1>TODOTabs <span>Your lists</span></h1>
 
-        <div id="todoActions">
+        <div class="todo-actions">
             <a href="#" id="settings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
             <a href="#" id="alarm"><i class="fa fa-bell fa-lg"></i><span class="sr-only">Alarm</span></a>
             <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
         </div>
 
-        <div id="todoDropdownWrapper">
+        <div class="todo-dropdown-wrapper" id="todoDropdownWrapper">
             <label class="sr-only" for="todoDropdown">Your lists</label>
-            <select id="todoDropdown"></select>
+            <select id="todoDropdown" class="todo-dropdown"></select>
             <a href="#" id="openAllTodos"><i class="fa fa-external-link-square fa-lg"></i><span class="sr-only">Open all todo items</span></a>
         </div>
 
-        <div id="savedTodos"></div>
+        <div class="todo-lists" id="todoLists"></div>
         <button id="createTodo" class="btn btn-primary">New Todo List</button>
     </div>
 
