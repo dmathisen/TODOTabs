@@ -31,6 +31,7 @@ TODOTabs.View = {
         TODOTabs.TodoList.getTodos(function(todos) {
             if (todos.allTodos && todos.allTodos.length) {
                 // create ul for each Todo List
+                // TODO: clean this up, it's messy
                 todos.allTodos.forEach(function(todo) {
                     var tabs = todo.tabs,
                         listHtml = '',
@@ -49,9 +50,7 @@ TODOTabs.View = {
 
                         listHtml += '<li>';
                         listHtml += '<div class="item-actions"><a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a></div>';
-                        listHtml += '<label>';
-                        listHtml += '<input type="checkbox" value="" /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span>';
-                        listHtml += '</label>';
+                        listHtml += '<label><input type="checkbox" value="" /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span></label>';
                         listHtml += '</li>';
                     });
 
@@ -71,7 +70,7 @@ TODOTabs.View = {
         TODOTabs.TodoList.getTodos(function(todos) {
             var dropdownWrapper = document.getElementById('todoDropdownWrapper'),
                 dropdown = document.getElementById('todoDropdown'),
-                optionsHtml = '';
+                optionsHtml = '<option value="-1">Select a todo list...</option>';
 
             if (todos.allTodos && todos.allTodos.length) {
                 todos.allTodos.forEach(function(todo) {

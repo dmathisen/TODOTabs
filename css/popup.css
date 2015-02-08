@@ -32,9 +32,6 @@ h3 {
 .todo-lists .todo {
     display: none;
 }
-.todo-lists .todo:first-child {
-    display: block;
-}
 .todo-lists ul {
     margin: 0 0 10px 0;
     padding: 0;
