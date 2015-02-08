@@ -1,12 +1,6 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.TodoList = {
-    Todo: function(name) {
-        this.name = name || "My List";
-        this.id = 'list-' + this.name.replace(/[^\w]/gi, '-'); // TODO: unique ids for all lists?
-        this.tabs = [];
-    },
-
     getTodos: function(callback) {
         chrome.storage.sync.get('allTodos', callback);
     },
@@ -19,17 +13,18 @@ TODOTabs.TodoList = {
         var self = this,
             Todo = this.Todo.prototype.createList(name);
 
-        // add all tabs to new list
+        // get all tabs
         TODOTabs.Helpers.getTabs(function(tabs) {
             tabs.forEach(function (tab) {
                 var title = tab.title.replace(' - Google Chrome', '').replace(/(<([^>]+)>)/ig,""); // remove Chrome text and strip tags
 
-                // don't store incognito tabs
+                // add tabs to Todo (don't store incognito tabs)
                 if (!tab.incognito && tab.title !== "New Tab") {
                     Todo.addTab({
                         id: tab.id,
                         title: title,
-                        url: tab.url
+                        url: tab.url,
+                        complete: false
                     });
                 }
             });
@@ -39,10 +34,10 @@ TODOTabs.TodoList = {
                 return;
             }
 
+            // get all todos
             self.getTodos(function(todos) {
+                // create array and add existing todo lists
                 var todosArr = [];
-
-                // add existing todo lists to array
                 if (todos.allTodos && todos.allTodos.length) {
                     todos.allTodos.forEach(function(todo) {
                         todosArr.push(todo);
@@ -96,6 +91,12 @@ TODOTabs.TodoList = {
     }
 };
 
+TODOTabs.TodoList.Todo = function(name) {
+    this.name = name || "My List";
+    this.id = 'list-' + this.name.replace(/[^\w]/gi, '-'); // TODO: unique ids for all lists?
+    this.tabs = [];
+    this.complete = false;
+};
 TODOTabs.TodoList.Todo.prototype.addTab = function(tab) {
     this.tabs.push(tab)
 };
