@@ -1,20 +1,17 @@
 <!doctype html>
 <html>
-    <head>
-        <title>TODOTabs</title>
-        <link href="css/popup.css" rel="stylesheet" type="text/css">
-        <script src="js/todolist.js"></script>
-        <script src="js/view.js"></script>
-        <script src="js/helpers.js"></script>
-        <script src="js/init.js"></script>
-    </head>
-
+<head>
+    <title>TODOTabs</title>
+    <link href="css/popup.css" rel="stylesheet" type="text/css">
+    <link href="css/font-awesome-4.3.0.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
     <div id="mainPopup">
         <h1>TODOTabs <span>Your lists</span></h1>
 
         <div id="todoActions">
-            <a href="">Settings</a>
-            <a href="" id="deleteTodo">Delete</a>
+            <a href="#" id="settings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
+            <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
         </div>
 
         <div id="todoDropdownWrapper">
@@ -25,4 +22,10 @@
         <div id="savedTodos"></div>
         <button id="createTodo" class="btn btn-primary">New Todo List</button>
     </div>
+
+    <script src="js/todolist.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/helpers.js"></script>
+    <script src="js/init.js"></script>
+</body>
 </html>
