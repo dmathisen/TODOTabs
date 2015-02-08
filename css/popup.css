@@ -45,6 +45,7 @@ h3 {
     border-bottom: 2px solid #bbb;
 }
 .todo-lists li {
+    position: relative;
     padding: 5px 10px;
     border: solid #ccc;
     border-width: 1px 1px 0;
@@ -85,7 +86,8 @@ h3 {
 
 .item-actions {
     display: none;
-    float: right;
+    position: absolute;
+    right: 5px;
 }
 .item-actions .fa {
     color: #999;
