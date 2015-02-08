@@ -2,27 +2,13 @@ var TODOTabs = TODOTabs || {};
 
 TODOTabs.Helpers = {
     getTabs: function(callback) {
-        chrome.tabs.query({}, callback);
+        chrome.tabs.query({ currentWindow: true }, callback);
     },
 
     getCurrentTodoId: function() {
         var dropdown = document.getElementById('todoDropdown');
         return dropdown.value;
     },
-
-//     getCurrentTodoItems: function() {
-//         var id = this.getCurrentTodoId(),
-//             todoItems;
-//         TODOTabs.TodoList.getTodos(function(todos) {
-//             todos.forEach(function(todo) {
-//                 if (todo.id = id) {
-//                     todoItems = todo;
-//                 }
-//             });
-//         });
-
-//         return todoItems;
-//     },
 
     openAllTodos: function() {
         TODOTabs.TodoList.getTodos(function(todos) {
