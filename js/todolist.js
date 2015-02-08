@@ -17,21 +17,16 @@ TODOTabs.TodoList = {
 
     createTodo: function(name) {
         var self = this,
-            TodoList = this.Todo.prototype.createList(name);
+            Todo = this.Todo.prototype.createList(name);
 
         // add all tabs to new list
         TODOTabs.Helpers.getTabs(function(tabs) {
-            if (!tabs.length) {
-                alert("No open tabs found");
-                return;
-            }
-
             tabs.forEach(function (tab) {
                 var title = tab.title.replace(' - Google Chrome', '').replace(/(<([^>]+)>)/ig,""); // remove Chrome text and strip tags
 
                 // don't store incognito tabs
-                if (!tab.incognito) {
-                    TodoList.addTab({
+                if (!tab.incognito && tab.title !== "New Tab") {
+                    Todo.addTab({
                         id: tab.id,
                         title: title,
                         url: tab.url
@@ -39,21 +34,26 @@ TODOTabs.TodoList = {
                 }
             });
 
+            if (!Todo.tabs.length) {
+                alert("You must have at least 1 tab open");
+                return;
+            }
+
             self.getTodos(function(todos) {
-                var todoArr = [];
+                var todosArr = [];
 
                 // add existing todo lists to array
                 if (todos.allTodos && todos.allTodos.length) {
                     todos.allTodos.forEach(function(todo) {
-                        todoArr.push(todo);
+                        todosArr.push(todo);
                     });
                 }
 
-                // add new TodoList to array
-                todoArr.unshift(TodoList);
+                // add new Todo to array
+                todosArr.unshift(Todo);
                 
                 // save todo list
-                self.saveTodos(todoArr);
+                self.saveTodos(todosArr);
             });
         });
     },
