@@ -10,9 +10,9 @@ TODOTabs.Init = {
         var btnDeleteTodo = document.getElementById('deleteTodo');
         btnDeleteTodo.addEventListener('click', TODOTabs.TodoList.deleteTodo);
 
-        // toggle lists
-        var btnGetTodoItems = document.getElementById('openTodoItems');
-        btnGetTodoItems.addEventListener('click', TODOTabs.Helpers.openAllTodos);
+        // open todo tabs
+        var btnOpenAllTodos = document.getElementById('openAllTodos');
+        btnOpenAllTodos.addEventListener('click', TODOTabs.Helpers.openAllTodos);
 
         // toggle lists
         var dropdown = document.getElementById('todoDropdown');

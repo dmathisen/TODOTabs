@@ -13,17 +13,23 @@ TODOTabs.Helpers = {
     openAllTodos: function() {
         TODOTabs.TodoList.getTodos(function(todos) {
             var id = TODOTabs.Helpers.getCurrentTodoId(),
-                currentTodo;
+                currentTodo = {};
             
+            // get currently selected todo
             todos.allTodos.forEach(function(todo) {
-                if (todo.id = id) {
+                if (todo.id == id) {
                     currentTodo = todo;
                 }
             });
 
-            currentTodo.tabs.forEach(function(tab) {
-                chrome.tabs.create({ url: tab.url }, function() {});
-            });
+            // open all Todo tabs in new window
+            if (currentTodo.tabs && currentTodo.tabs.length) {
+                var tabsArr = currentTodo.tabs.map(function(tab) {
+                    return tab.url;
+                });
+
+                chrome.windows.create({ url: tabsArr }, function() {});
+            }
         });
     },
 
