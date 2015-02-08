@@ -22,6 +22,6 @@ TODOTabs.Init = {
 
 document.addEventListener('DOMContentLoaded', function () {
     TODOTabs.Init.setupActions();
-    TODOTabs.View.updateListHtml();
-    TODOTabs.View.updateListDropdown();
+    TODOTabs.View.createListHtml();
+    TODOTabs.View.createListDropdown();
 });

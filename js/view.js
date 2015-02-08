@@ -24,7 +24,22 @@ TODOTabs.View = {
         });
     },
 
-    updateListHtml: function() {
+    setupTodoStatusActions: function(todoId) {
+        var statusCheckboxes = document.querySelectorAll('#' + todoId + ' .todo-status');
+        [].forEach.call(statusCheckboxes, function(checkbox) {
+            checkbox.addEventListener('change', TODOTabs.View.toggleTodoStatus);
+        });
+    },
+
+    toggleTodoStatus: function() {
+        if (this.checked) {
+            TODOTabs.TodoList.markTodoComplete(this.value);
+        } else {
+            TODOTabs.TodoList.markTodoInProgress(this.value);
+        }
+    },
+
+    createListHtml: function() {
         var listEl = document.getElementById('todoLists');
         listEl.innerHTML = '';
 
@@ -50,7 +65,7 @@ TODOTabs.View = {
 
                         listHtml += '<li>';
                         listHtml += '<div class="item-actions"><a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a></div>';
-                        listHtml += '<label><input type="checkbox" value="" /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span></label>';
+                        listHtml += '<label><input type="checkbox" class="todo-status" value="' + tab.id + '" /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span></label>';
                         listHtml += '</li>';
                     });
 
@@ -59,14 +74,14 @@ TODOTabs.View = {
 
                     listWrapper.innerHTML = listHtml;
                     listEl.appendChild(listWrapper);
-                }); 
+                });
             } else {
                 listEl.innerHTML = '<p>There are no lists, please create a new one</p>';
             }
         });
     },
 
-    updateListDropdown: function() {
+    createListDropdown: function() {
         TODOTabs.TodoList.getTodos(function(todos) {
             var dropdownWrapper = document.getElementById('todoDropdownWrapper'),
                 dropdown = document.getElementById('todoDropdown'),
@@ -91,6 +106,7 @@ TODOTabs.View = {
             todo.style.display = 'none';
         });
         document.getElementById(id).style.display = 'block';
+        TODOTabs.View.setupTodoStatusActions(id);
     }
 
     //showLatestTodo: function() {

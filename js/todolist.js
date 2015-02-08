@@ -82,9 +82,17 @@ TODOTabs.TodoList = {
             //     return false;
             // }
             
-            TODOTabs.View.updateListHtml();
-            TODOTabs.View.updateListDropdown();
+            TODOTabs.View.createListHtml();
+            TODOTabs.View.createListDropdown();
         });
+    },
+
+    markTodoComplete: function(tabId) {
+        // TODO
+    },
+
+    markTodoInProgress: function(tabId) {
+        // TODO
     }
 };
 
