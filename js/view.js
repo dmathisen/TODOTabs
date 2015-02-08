@@ -105,17 +105,22 @@ TODOTabs.View = {
         [].forEach.call(todoLists, function(todo) {
             todo.style.display = 'none';
         });
+
+        if (id == -1) {
+            return;
+        }
+        
         document.getElementById(id).style.display = 'block';
         TODOTabs.View.setupTodoStatusActions(id);
-    }
+    },
 
-    //showLatestTodo: function() {
-    //    var dropdown = document.getElementById('#todoDropdown');
-    //    dropdown.selectedIndex = select.options.length - 1;
-    //
-    //    // trigger change
-    //    var evt = document.createEvent("HTMLEvents");
-    //    evt.initEvent("change", false, true);
-    //    dropdown.dispatchEvent(evt);
-    //}
+    showLatestTodo: function() {
+        var dropdown = document.getElementById('todoDropdown');
+        dropdown.selectedIndex = 1;
+
+        // trigger change
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("change", false, true);
+        dropdown.dispatchEvent(evt);
+    }
 };

@@ -53,22 +53,6 @@ TODOTabs.TodoList = {
         });
     },
 
-    deleteTodo: function() {
-        TODOTabs.TodoList.getTodos(function(todos) {
-            var id = TODOTabs.Helpers.getCurrentTodoId();
-
-            if (todos.allTodos && todos.allTodos.length) {
-                todos.allTodos.forEach(function(todo, index, obj) {
-                    if (todo.id == id) {
-                        obj.splice(index, 1)
-                    }
-                });
-            }
-
-            TODOTabs.TodoList.saveTodos(todos.allTodos);
-        });
-    },
-
     saveTodos: function(todoArray) {
         this.clearTodos();
         chrome.storage.sync.set({ 'allTodos': todoArray }, function() {
@@ -79,6 +63,26 @@ TODOTabs.TodoList = {
             
             TODOTabs.View.createListHtml();
             TODOTabs.View.createListDropdown();
+            TODOTabs.View.showLatestTodo();
+        });
+    },
+
+    deleteTodo: function() {
+        TODOTabs.TodoList.getTodos(function(todos) {
+            var id = TODOTabs.Helpers.getCurrentTodoId();
+            if (id == -1) {
+                return;
+            }
+        
+            if (todos.allTodos && todos.allTodos.length) {
+                todos.allTodos.forEach(function(todo, index, obj) {
+                    if (todo.id == id) {
+                        obj.splice(index, 1)
+                    }
+                });
+            }
+
+            TODOTabs.TodoList.saveTodos(todos.allTodos);
         });
     },
 
