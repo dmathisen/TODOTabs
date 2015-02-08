@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <title>TODOTabs</title>
+        <link href="css/popup.css" rel="stylesheet" type="text/css">
+        <script src="js/todolist.js"></script>
+        <script src="js/view.js"></script>
+        <script src="js/helpers.js"></script>
+        <script src="js/init.js"></script>
+    </head>
+
+    <div id="mainPopup">
+        <h1>TODOTabs <span>Your lists</span></h1>
+
+        <div id="todoActions">
+            <a href="">Settings</a>
+            <a href="" id="deleteTodo">Delete</a>
+        </div>
+
+        <div id="todoDropdownWrapper">
+            <label class="sr-only" for="todoDropdown">Your lists</label>
+            <select id="todoDropdown"></select>
+        </div>
+
+        <div id="savedTodos"></div>
+        <button id="createTodo" class="btn btn-primary">New Todo List</button>
+    </div>
+</html>
