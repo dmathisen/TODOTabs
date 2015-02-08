@@ -10,6 +10,37 @@ TODOTabs.Helpers = {
         return dropdown.value;
     },
 
+//     getCurrentTodoItems: function() {
+//         var id = this.getCurrentTodoId(),
+//             todoItems;
+//         TODOTabs.TodoList.getTodos(function(todos) {
+//             todos.forEach(function(todo) {
+//                 if (todo.id = id) {
+//                     todoItems = todo;
+//                 }
+//             });
+//         });
+
+//         return todoItems;
+//     },
+
+    openAllTodos: function() {
+        TODOTabs.TodoList.getTodos(function(todos) {
+            var id = TODOTabs.Helpers.getCurrentTodoId(),
+                currentTodo;
+            
+            todos.allTodos.forEach(function(todo) {
+                if (todo.id = id) {
+                    currentTodo = todo;
+                }
+            });
+
+            currentTodo.tabs.forEach(function(tab) {
+                chrome.tabs.create({ url: tab.url }, function() {});
+            });
+        });
+    },
+
     validateTodoName: function() {
         var name = prompt("List name");
 
