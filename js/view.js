@@ -1,26 +1,15 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.View = {
-    openAllTodos: function() {
-        TODOTabs.TodoList.getTodos(function(todos) {
+    openTodoTabs: function() {
+        TODOTabs.TodoList.getCurrentTodo(function(todos) {
             var id = TODOTabs.TodoList.getCurrentTodoId(),
-                currentTodo = {};
-
-            // get currently selected todo
-            todos.allTodos.forEach(function(todo) {
-                if (todo.id == id) {
-                    currentTodo = todo;
-                }
-            });
-
-            // open all Todo tabs in new window
-            if (currentTodo.tabs && currentTodo.tabs.length) {
-                var tabsArr = currentTodo.tabs.map(function(tab) {
-                    return tab.url;
+                todo = todos[id]
+                tabsArr = todo.tabs.map(function(tab) {
+                    return tab.url
                 });
-
-                chrome.windows.create({ url: tabsArr }, function() {});
-            }
+            // open all tabs
+            chrome.windows.create({ url: tabsArr }, function() {});
         });
     },
 
@@ -66,7 +55,7 @@ TODOTabs.View = {
         this.showLatestTodo();
 
         // setup status checkbox click events
-        TODOTabs.View.setupTodoStatusActions(todo.id);
+        TODOTabs.Helpers.setupTodoStatusActions(todo.id);
 
         var noTodosEl = document.getElementById('noTodos');
         if (noTodosEl) {
@@ -121,33 +110,5 @@ TODOTabs.View = {
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent("change", false, true);
         dropdown.dispatchEvent(evt);
-    },
-
-    setupTodoStatusActions: function(todoId) {
-        var statusCheckboxes = document.querySelectorAll('#' + todoId + ' .todo-status');
-        [].forEach.call(statusCheckboxes, function(checkbox) {
-            checkbox.addEventListener('change', TODOTabs.View.toggleTodoStatus);
-        });
-    },
-
-    // TODO
-    toggleTodoStatus: function() {
-        if (this.checked) {
-            TODOTabs.TodoList.setProperty('complete', true);
-            this.parentElement.parentElement.classList.add('completed');
-        } else {
-            TODOTabs.TodoList.setProperty('complete', false);
-            this.parentElement.parentElement.classList.remove('completed');
-        }
     }
-
-    //toggleTodoStatus: function() {
-    //    if (this.checked) {
-    //        TODOTabs.TodoList.updateStatus(this.value, true);
-    //        this.parentElement.parentElement.classList.add('completed');
-    //    } else {
-    //        TODOTabs.TodoList.updateStatus(this.value, false);
-    //        this.parentElement.parentElement.classList.remove('completed');
-    //    }
-    //}
 };

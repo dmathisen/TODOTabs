@@ -1,6 +1,7 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.TodoList = {
+    // todo actions
     createTodo: function(name) {
         var self = this,
             Todo = this.Todo.prototype.createTodo(name);
@@ -8,13 +9,11 @@ TODOTabs.TodoList = {
         // get all tabs
         TODOTabs.Helpers.getTabs(function(tabs) {
             tabs.forEach(function (tab) {
-                var title = tab.title.replace(' - Google Chrome', '').replace(/(<([^>]+)>)/ig, ''); // remove Chrome text and strip tags
-
-                // add tabs to Todo (don't store incognito tabs)
+                // add tabs to Todo (don't store incognito or new tabs)
                 if (!tab.incognito && tab.title !== "New Tab") {
                     Todo.addTab({
                         id: tab.id,
-                        title: title,
+                        title: tab.title.replace(' - Google Chrome', '').replace(/(<([^>]+)>)/ig, ''), // remove Chrome text and strip tags,
                         url: tab.url,
                         complete: false
                     });
@@ -45,56 +44,50 @@ TODOTabs.TodoList = {
         });
     },
 
-    // TODO
+    clearTodos: function() {
+        chrome.storage.sync.clear();
+    },
+
+    // set properties
     setProperty: function(key, value) {
         var self = this;
-        this.getCurrentTodo(function(todo) {
-            var id = Object.keys(todo)[0];
-            todo[id][key] = value;
+        this.getCurrentTodo(function(todos) {
+            var id = TODOTabs.TodoList.getCurrentTodoId(),
+                todo = todos[id];
 
-            self.saveTodo(todo[id]);
+            todo[key] = value;
+            self.saveTodo(todo);
         })
     },
 
+    setTabProperty: function(tabId, key, value) {
+        var self = this;
+        this.getCurrentTodo(function(todos) {
+            var id = TODOTabs.TodoList.getCurrentTodoId(),
+                todo = todos[id],
+                tab = todo.tabs.filter(function(tab) {
+                    return tab.id == tabId;
+                });
+
+            tab[0][key] = value;
+            self.saveTodo(todo);
+        })
+    },
+
+    // get
     getAllTodos: function(callback) {
         chrome.storage.sync.get(null, callback);
     },
 
     getCurrentTodo: function(callback) {
-        var id = this.getCurrentTodoId();
+        var id = document.getElementById('todoDropdown').value;
         chrome.storage.sync.get(id, callback);
     },
 
-    getCurrentTodoId: function() {
-        var dropdown = document.getElementById('todoDropdown');
-        return dropdown.value;
-    },
-
-    clearTodos: function() {
-        chrome.storage.sync.clear();
+    getCurrentTodoId: function(callback) {
+        var id = document.getElementById('todoDropdown').value;
+        return id;
     }
-
-    //updateStatus: function(itemId, completed) {
-    //    var self = this,
-    //        todoId = this.getCurrentTodoId();
-    //
-    //     // get all todos
-    //     this.getAllTodos(function(todos) {
-    //         todos.allTodos.forEach(function(todo) {
-    //             // get current todo list
-    //             if (todo.id == todoId) {
-    //                 todo.tabs.forEach(function(tab) {
-    //                     // get related tab and mark as complete
-    //                     if (tab.id == tabId) {
-    //                         tab.complete = completed;
-    //                     }
-    //                 });
-    //             }
-    //         });
-    //
-    //         self.saveTodos(todos.allTodos);
-    //     });
-    //}
 };
 
 TODOTabs.TodoList.Todo = function(name) {

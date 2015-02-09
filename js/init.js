@@ -26,8 +26,8 @@ TODOTabs.Init = {
         btnDeleteTodo.addEventListener('click', TODOTabs.TodoList.deleteTodo);
 
         // open todo tabs
-        var btnOpenAllTodos = document.getElementById('openAllTodos');
-        btnOpenAllTodos.addEventListener('click', TODOTabs.View.openAllTodos);
+        var btnOpenTodoTabs = document.getElementById('openTodoTabs');
+        btnOpenTodoTabs.addEventListener('click', TODOTabs.View.openTodoTabs);
 
         // toggle lists
         var dropdown = document.getElementById('todoDropdown');
