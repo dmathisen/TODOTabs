@@ -71,7 +71,25 @@ TODOTabs.TodoList = {
 
             tab[0][key] = value;
             self.saveTodo(todo);
+
+            // if tab is marked as complete
+            if (key === "complete") {
+                if (value == true) {
+                    self.tabComplete(tab[0]);
+                } else {
+                    self.tabIncomplete(tab[0]);
+                }
+            }
         })
+    },
+
+    // status
+    tabComplete: function(tab) {
+        //chrome.tabs.remove(tab.id, function() {});
+    },
+
+    tabIncomplete: function(tab) {
+        //chrome.tabs.create({ url: tab.url }, function() {});
     },
 
     // get
