@@ -5,11 +5,6 @@ TODOTabs.Helpers = {
         chrome.tabs.query({ currentWindow: true }, callback);
     },
 
-    getCurrentTodoId: function() {
-        var dropdown = document.getElementById('todoDropdown');
-        return dropdown.value;
-    },
-
     validateTodoName: function() {
         var name = prompt("List name");
 
@@ -19,22 +14,13 @@ TODOTabs.Helpers = {
         }
 
         // get all todos and compare names
-        TODOTabs.TodoList.getTodos(function(todos) {
-            var nameIsValid = true;
+        TODOTabs.TodoList.getAllTodos(function(todos) {
+            if (todos['list-' + name]) {
+                alert('A list with the name "' + name + '" exists, please choose a new name');
+                return;
+            }
 
-            if (todos.allTodos && todos.allTodos.length) {
-                todos.allTodos.forEach(function(list) {
-                    // check if name exists, if so nameIsValid = false
-                    if (list.name == name) {
-                        alert('A list with the name "' + name + '" exists, please choose a new name');
-                        nameIsValid = false;
-                    }
-                });
-            }
-            
-            if (nameIsValid) {
-                TODOTabs.TodoList.createTodo(name);
-            }
+            TODOTabs.TodoList.createTodo(name);
         });
     }
 };

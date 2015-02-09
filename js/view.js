@@ -3,7 +3,7 @@ var TODOTabs = TODOTabs || {};
 TODOTabs.View = {
     openAllTodos: function() {
         TODOTabs.TodoList.getTodos(function(todos) {
-            var id = TODOTabs.Helpers.getCurrentTodoId(),
+            var id = TODOTabs.TodoList.getCurrentTodoId(),
                 currentTodo = {};
 
             // get currently selected todo
@@ -106,7 +106,6 @@ TODOTabs.View = {
         });
 
         if (id == -1) {
-            // "Select a todo list..." option selected
             return;
         }
 
@@ -131,13 +130,24 @@ TODOTabs.View = {
         });
     },
 
+    // TODO
     toggleTodoStatus: function() {
         if (this.checked) {
-            TODOTabs.TodoList.updateStatus(this.value, true);
+            TODOTabs.TodoList.setProperty('complete', true);
             this.parentElement.parentElement.classList.add('completed');
         } else {
-            TODOTabs.TodoList.updateStatus(this.value, false);
+            TODOTabs.TodoList.setProperty('complete', false);
             this.parentElement.parentElement.classList.remove('completed');
         }
     }
+
+    //toggleTodoStatus: function() {
+    //    if (this.checked) {
+    //        TODOTabs.TodoList.updateStatus(this.value, true);
+    //        this.parentElement.parentElement.classList.add('completed');
+    //    } else {
+    //        TODOTabs.TodoList.updateStatus(this.value, false);
+    //        this.parentElement.parentElement.classList.remove('completed');
+    //    }
+    //}
 };

@@ -2,14 +2,16 @@ var TODOTabs = TODOTabs || {};
 
 TODOTabs.Init = {
     populateHtml: function() {
-        TODOTabs.TodoList.getTodos(function(todos) {
-            if (todos.allTodos && todos.allTodos.length) {
-                todos.allTodos.forEach(function(todo) {
-                    TODOTabs.View.addTodoList(todo);
-                    document.getElementById('dropdownWrapper').style.display = 'block';
-                });
-            } else {
+        TODOTabs.TodoList.getAllTodos(function(todos) {
+            // if no todos saved, display message and return
+            if (!Object.keys(todos).length) {
                 TODOTabs.View.displayNoTodosMsg();
+                return;
+            }
+
+            for (var id in todos) {
+                TODOTabs.View.addTodoList(todos[id]);
+                document.getElementById('dropdownWrapper').style.display = 'block';
             }
         });
     },
