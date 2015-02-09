@@ -28,6 +28,25 @@
         <button id="createTodo" class="btn btn-primary">New Todo List</button>
     </div>
 
+    <script id="listTemplate" type="x-tmpl-mustache">
+        <h3>{{ name }}</h3>
+        <ul>
+            {{ #tabs }}
+            <li class="{{ completedClass }}">
+                <div class="item-actions">
+                    <a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a>
+                </div>
+                <label>
+                    <input type="checkbox" class="todo-status" value="{{ id }}" {{ checked }} />
+                    <span class="title">{{ title }}</span>
+                    <span class="note">{{ domain }}</span>
+                </label>
+            </li>
+            {{ /tabs }}
+        </ul>
+    </script>
+
+    <script src="js/lib/mustache.min.js"></script>
     <script src="js/todolist.js"></script>
     <script src="js/view.js"></script>
     <script src="js/helpers.js"></script>

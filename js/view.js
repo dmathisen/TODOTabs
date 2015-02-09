@@ -14,36 +14,9 @@ TODOTabs.View = {
     },
 
     addTodoList: function(todo) {
-        // TODO: use templates
-        var todoWrapper = document.getElementById('todoLists'),
-            todoEl = document.createElement('div'),
-            tabs = todo.tabs,
-            listHtml = '';
+        var todoLists = document.getElementById('todoLists');
 
-        todoEl.setAttribute('class', 'todo');
-        todoEl.setAttribute('id', todo.id);
-
-        listHtml += '<h3>' + todo.name + '</h3>';
-        listHtml += '<ul>';
-
-        // add list item for each tab
-        tabs.forEach(function(tab) {
-            var title = decodeURI(tab.title),
-                domain = tab.url.split('/')[2],
-                completed = tab.complete,
-                checkedStr = (completed) ? ' checked="checked"' : '',
-                completedClass = (completed) ? 'completed' : '';
-            listHtml += '<li class="' + completedClass + '">';
-            listHtml += '<div class="item-actions"><a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a></div>';
-            listHtml += '<label><input type="checkbox" class="todo-status" value="' + tab.id + '" ' + checkedStr + ' /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span></label>';
-            listHtml += '</li>';
-        });
-
-        listHtml += '</ul>';
-        listHtml += '</div>';
-
-        todoEl.innerHTML = listHtml;
-        todoWrapper.insertBefore(todoEl, todoWrapper.firstChild);
+        this.renderTodoTemplate(todo);
 
         // add to dropdown
         var dropdown = document.getElementById('todoDropdown'),
@@ -59,8 +32,39 @@ TODOTabs.View = {
 
         var noTodosEl = document.getElementById('noTodos');
         if (noTodosEl) {
-            todoWrapper.removeChild(noTodosEl);
+            todoLists.removeChild(noTodosEl);
         }
+    },
+
+    renderTodoTemplate: function(todo) {
+        var todoLists = document.getElementById('todoLists'),
+            todoEl = document.createElement('div'),
+            listTemplate = document.getElementById('listTemplate').innerHTML,
+            tabs = todo.tabs;
+        todoEl.setAttribute('class', 'todo');
+        todoEl.setAttribute('id', todo.id);
+
+        Mustache.parse(listTemplate);
+
+        todoData = {
+            id: todo.id,
+            name: todo.name,
+            tabs: []
+        };
+
+        // add tab to todoData
+        tabs.forEach(function(tab) {
+            todoData.tabs.push({
+                id: tab.id,
+                title: decodeURI(tab.title),
+                domain: tab.url.split('/')[2],
+                completedClass: (tab.complete) ? 'completed' : '',
+                checked: (tab.complete) ? 'checked="checked"' : ''
+            });
+        });
+
+        todoEl.innerHTML = Mustache.render(listTemplate, todoData);
+        todoLists.insertBefore(todoEl, todoLists.firstChild);
     },
 
     removeTodoList: function(id) {
