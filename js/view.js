@@ -13,13 +13,14 @@ TODOTabs.View = {
         });
     },
 
-    addTodoList: function(todo) {
+    addTodoList: function(todo, init) {
         this.renderTodoList(todo);
         this.addToDropdownList(todo);
-
-        // show new list
-        this.showLatestTodo();
         this.removeNoTodosMsg();
+        // show "select a todo list" on initial load
+        if (!init) {
+            this.showLatestTodo();
+        }
 
         // setup status checkbox click events
         TODOTabs.Helpers.setupTodoStatusActions(todo.id);

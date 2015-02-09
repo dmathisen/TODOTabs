@@ -10,7 +10,7 @@ TODOTabs.Init = {
             }
 
             for (var id in todos) {
-                TODOTabs.View.addTodoList(todos[id]);
+                TODOTabs.View.addTodoList(todos[id], true);
             }
         });
     },
