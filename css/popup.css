@@ -28,6 +28,13 @@ h3 {
 .main-popup {
     width: 375px;
 }
+.actions-wrapper {
+    display: none;
+}
+.no-todos {
+    display: none;
+    margin-bottom: 15px;
+}
 
 .todo-lists .todo {
     display: none;
@@ -66,9 +73,6 @@ h3 {
     margin-left: 2em;
 }
 
-.dropdown-wrapper {
-    display: none;
-}
 .todo-dropdown {
     width: 140px;
     margin-bottom: 10px;

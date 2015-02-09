@@ -14,36 +14,34 @@ TODOTabs.View = {
     },
 
     addTodoList: function(todo) {
-        var todoLists = document.getElementById('todoLists');
-
-        this.renderTodoTemplate(todo);
-
-        // add to dropdown
-        var dropdown = document.getElementById('todoDropdown'),
-            optionsHtml = '<option value="' + todo.id + '">' + todo.name + '</option>';
-        dropdown.firstElementChild.insertAdjacentHTML('afterend', optionsHtml);
+        this.renderTodoList(todo);
+        this.addToDropdownList(todo);
 
         // show new list
-        document.getElementById('dropdownWrapper').style.display = 'block';
         this.showLatestTodo();
+        this.removeNoTodosMsg();
 
         // setup status checkbox click events
         TODOTabs.Helpers.setupTodoStatusActions(todo.id);
-
-        var noTodosEl = document.getElementById('noTodos');
-        if (noTodosEl) {
-            todoLists.removeChild(noTodosEl);
-        }
     },
 
-    renderTodoTemplate: function(todo) {
-        var todoLists = document.getElementById('todoLists'),
+    removeTodoList: function(id) {
+        var todoWrapper = document.getElementById('todoLists'),
+            todoEl = document.getElementById(id);
+        todoWrapper.removeChild(todoEl);
+
+        this.removeFromDropdownList(id);
+    },
+
+    renderTodoList: function(todo) {
+        var lists = document.getElementById('todoLists'),
+            listTemplate = document.getElementById('todoListTemplate').innerHTML,
             todoEl = document.createElement('div'),
-            listTemplate = document.getElementById('listTemplate').innerHTML,
             tabs = todo.tabs;
         todoEl.setAttribute('class', 'todo');
         todoEl.setAttribute('id', todo.id);
 
+        // cache template
         Mustache.parse(listTemplate);
 
         todoData = {
@@ -64,15 +62,16 @@ TODOTabs.View = {
         });
 
         todoEl.innerHTML = Mustache.render(listTemplate, todoData);
-        todoLists.insertBefore(todoEl, todoLists.firstChild);
+        lists.insertBefore(todoEl, lists.firstChild);
     },
 
-    removeTodoList: function(id) {
-        var todoWrapper = document.getElementById('todoLists'),
-            todoEl = document.getElementById(id);
-        todoWrapper.removeChild(todoEl);
+    addToDropdownList: function(todo) {
+        var dropdown = document.getElementById('todoDropdown'),
+            optionsHtml = '<option value="' + todo.id + '">' + todo.name + '</option>';
+        dropdown.firstElementChild.insertAdjacentHTML('afterend', optionsHtml);
+    },
 
-        // remove from dropdown
+    removeFromDropdownList: function(id) {
         var dropdown = document.getElementById('todoDropdown'),
             item = document.querySelector('#todoDropdown option[value="' + id + '"]');
         dropdown.removeChild(item);
@@ -83,10 +82,15 @@ TODOTabs.View = {
     },
 
     displayNoTodosMsg: function () {
-        var dropdownWrapper = document.getElementById('dropdownWrapper'),
-            todoEl = document.getElementById('todoLists');
-        dropdownWrapper.style.display = 'none';
-        todoEl.innerHTML = '<p id="noTodos">There are no saved lists, please create a new one</p>';
+        document.getElementById('actionsWrapper').style.display = 'none';
+        document.getElementById('todoLists').style.display = 'none';
+        document.getElementById('noTodos').style.display = 'block';
+    },
+
+    removeNoTodosMsg: function () {
+        document.getElementById('actionsWrapper').style.display = 'block';
+        document.getElementById('todoLists').style.display = 'block';
+        document.getElementById('noTodos').style.display = 'none';
     },
 
     toggleLists: function() {

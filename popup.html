@@ -9,13 +9,16 @@
     <div class="main-popup">
         <h1>TODOTabs <span>Your lists</span></h1>
 
-        <div class="todo-actions">
-            <a href="#" id="settings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
-            <a href="#" id="alarm"><i class="fa fa-bell fa-lg"></i><span class="sr-only">Alarm</span></a>
-            <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
-        </div>
+        <!-- actions wrapper -->
+        <div class="actions-wrapper" id="actionsWrapper">
+            <!-- actions -->
+            <div class="todo-actions">
+                <a href="#" id="settings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
+                <a href="#" id="alarm"><i class="fa fa-bell fa-lg"></i><span class="sr-only">Alarm</span></a>
+                <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
+            </div>
 
-        <div id="dropdownWrapper" class="dropdown-wrapper">
+            <!-- dropdown -->
             <label class="sr-only" for="todoDropdown">Your lists</label>
             <select id="todoDropdown" class="todo-dropdown">
                 <option value="-1">Select a todo list...</option>
@@ -24,11 +27,17 @@
             <a href="#" id="openTodoTabs"><i class="fa fa-external-link-square fa-lg"></i><span class="sr-only">Open all todo items</span></a>
         </div>
 
+        <!-- no todos found -->
+        <p class="no-todos" id="noTodos">There are no saved lists, please create a new one</p>
+
+        <!-- lists -->
         <div class="todo-lists" id="todoLists"></div>
+
+        <!-- new todo btn -->
         <button id="createTodo" class="btn btn-primary">New Todo List</button>
     </div>
 
-    <script id="listTemplate" type="x-tmpl-mustache">
+    <script id="todoListTemplate" type="x-tmpl-mustache">
         <h3>{{ name }}</h3>
         <ul>
             {{ #tabs }}

@@ -38,7 +38,7 @@ TODOTabs.TodoList = {
     },
 
     deleteTodo: function() {
-        var currentItemId = this.getCurrentTodoId();
+        var currentItemId = TODOTabs.TodoList.getCurrentTodoId();
         chrome.storage.sync.remove(currentItemId, function() {
             TODOTabs.View.removeTodoList(currentItemId);
         });

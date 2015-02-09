@@ -11,7 +11,6 @@ TODOTabs.Init = {
 
             for (var id in todos) {
                 TODOTabs.View.addTodoList(todos[id]);
-                document.getElementById('dropdownWrapper').style.display = 'block';
             }
         });
     },
