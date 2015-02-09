@@ -58,6 +58,9 @@ h3 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.todo-lists .completed .title {
+    text-decoration: line-through;
+}
 .todo-lists .note {
     display: block;
     margin-left: 2em;

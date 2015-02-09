@@ -40,10 +40,13 @@ TODOTabs.View = {
         // add list item for each tab
         tabs.forEach(function(tab) {
             var title = decodeURI(tab.title),
-                domain = tab.url.split('/')[2];
-            listHtml += '<li>';
+                domain = tab.url.split('/')[2],
+                completed = tab.complete,
+                checkedStr = (completed) ? ' checked="checked"' : '',
+                completedClass = (completed) ? 'completed' : '';
+            listHtml += '<li class="' + completedClass + '">';
             listHtml += '<div class="item-actions"><a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a></div>';
-            listHtml += '<label><input type="checkbox" class="todo-status" value="' + tab.id + '" /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span></label>';
+            listHtml += '<label><input type="checkbox" class="todo-status" value="' + tab.id + '" ' + checkedStr + ' /><span class="title">' + title + '</span> <span class="note">(' + domain + ')</span></label>';
             listHtml += '</li>';
         });
 
@@ -130,9 +133,11 @@ TODOTabs.View = {
 
     toggleTodoStatus: function() {
         if (this.checked) {
-            TODOTabs.TodoList.markTodoComplete(this.value);
+            TODOTabs.TodoList.updateStatus(this.value, true);
+            this.parentElement.parentElement.classList.add('completed');
         } else {
-            TODOTabs.TodoList.markTodoInProgress(this.value);
+            TODOTabs.TodoList.updateStatus(this.value, false);
+            this.parentElement.parentElement.classList.remove('completed');
         }
     }
 };

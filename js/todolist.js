@@ -82,7 +82,7 @@ TODOTabs.TodoList = {
         });
     },
 
-    markTodoComplete: function(tabId) {
+    updateStatus: function(tabId, completed) {
         var self = this,
             todoId = TODOTabs.Helpers.getCurrentTodoId();
 
@@ -94,7 +94,7 @@ TODOTabs.TodoList = {
                     todo.tabs.forEach(function(tab) {
                         // get related tab and mark as complete
                         if (tab.id == tabId) {
-                            tab.complete = true;
+                            tab.complete = completed;
                         }
                     });
                 }
@@ -102,10 +102,6 @@ TODOTabs.TodoList = {
 
             self.saveTodos(todos.allTodos);
         });
-    },
-
-    markTodoInProgress: function(tabId) {
-        var one = 1;
     }
 };
 
