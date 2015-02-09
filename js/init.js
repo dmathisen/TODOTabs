@@ -1,6 +1,19 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.Init = {
+    populateHtml: function() {
+        TODOTabs.TodoList.getTodos(function(todos) {
+            if (todos.allTodos && todos.allTodos.length) {
+                todos.allTodos.forEach(function(todo) {
+                    TODOTabs.View.addTodoList(todo);
+                    document.getElementById('dropdownWrapper').style.display = 'block';
+                });
+            } else {
+                TODOTabs.View.displayNoTodosMsg();
+            }
+        });
+    },
+
     setupActions: function() {
         // create new list
         var btnCreateTodo = document.getElementById('createTodo');
@@ -21,7 +34,6 @@ TODOTabs.Init = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
+    TODOTabs.Init.populateHtml();
     TODOTabs.Init.setupActions();
-    TODOTabs.View.createListHtml();
-    TODOTabs.View.createListDropdown();
 });

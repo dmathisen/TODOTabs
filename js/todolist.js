@@ -9,6 +9,11 @@ TODOTabs.TodoList = {
         chrome.storage.sync.clear();
     },
 
+    saveTodos: function(todoArray) {
+        this.clearTodos();
+        chrome.storage.sync.set({ 'allTodos': todoArray }, function() {});
+    },
+
     createTodo: function(name) {
         var self = this,
             Todo = this.Todo.prototype.createList(name);
@@ -16,7 +21,7 @@ TODOTabs.TodoList = {
         // get all tabs
         TODOTabs.Helpers.getTabs(function(tabs) {
             tabs.forEach(function (tab) {
-                var title = tab.title.replace(' - Google Chrome', '').replace(/(<([^>]+)>)/ig,""); // remove Chrome text and strip tags
+                var title = tab.title.replace(' - Google Chrome', '').replace(/(<([^>]+)>)/ig, ''); // remove Chrome text and strip tags
 
                 // add tabs to Todo (don't store incognito tabs)
                 if (!tab.incognito && tab.title !== "New Tab") {
@@ -34,7 +39,10 @@ TODOTabs.TodoList = {
                 return;
             }
 
-            // get all todos
+            // add to popup
+            TODOTabs.View.addTodoList(Todo);
+
+            // add new todo to current todos and save
             self.getTodos(function(todos) {
                 // create array and add existing todo lists
                 var todosArr = [];
@@ -46,24 +54,9 @@ TODOTabs.TodoList = {
 
                 // add new Todo to array
                 todosArr.unshift(Todo);
-                
-                // save todo list
+
                 self.saveTodos(todosArr);
             });
-        });
-    },
-
-    saveTodos: function(todoArray) {
-        this.clearTodos();
-        chrome.storage.sync.set({ 'allTodos': todoArray }, function() {
-            // if (chrome.runtime.lastError) {
-            //     console.error('Something went wrong: Todos not saved');
-            //     return false;
-            // }
-            
-            TODOTabs.View.createListHtml();
-            TODOTabs.View.createListDropdown();
-            TODOTabs.View.showLatestTodo();
         });
     },
 
@@ -73,6 +66,9 @@ TODOTabs.TodoList = {
             if (id == -1) {
                 return;
             }
+
+            // remove from popup
+            TODOTabs.View.removeTodoList(id);
         
             if (todos.allTodos && todos.allTodos.length) {
                 todos.allTodos.forEach(function(todo, index, obj) {
@@ -87,11 +83,29 @@ TODOTabs.TodoList = {
     },
 
     markTodoComplete: function(tabId) {
-        // TODO
+        var self = this,
+            todoId = TODOTabs.Helpers.getCurrentTodoId();
+
+        // get all todos
+        this.getTodos(function(todos) {
+            todos.allTodos.forEach(function(todo) {
+                // get current todo list
+                if (todo.id == todoId) {
+                    todo.tabs.forEach(function(tab) {
+                        // get related tab and mark as complete
+                        if (tab.id == tabId) {
+                            tab.complete = true;
+                        }
+                    });
+                }
+            });
+
+            self.saveTodos(todos.allTodos);
+        });
     },
 
     markTodoInProgress: function(tabId) {
-        // TODO
+        var one = 1;
     }
 };
 
