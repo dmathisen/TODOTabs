@@ -1,15 +1,34 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.View = {
+    // TODO: on open all tabs, open in a new window
+    //       on todo click, open tab
     openTodoTabs: function() {
         TODOTabs.TodoList.getCurrentTodo(function(todos) {
             var id = TODOTabs.TodoList.getCurrentTodoId(),
-                todo = todos[id]
-                tabsArr = todo.tabs.map(function(tab) {
+                todo = todos[id];
+                todoUrls = todo.tabs.map(function(tab) {
                     return tab.url
                 });
+
+            TODOTabs.Helpers.getTabs(function (openTabs) {
+                todoUrls.forEach(function(todoUrl) {
+                    var tabIsOpen = false;
+                    openTabs.filter(function(openTab) {
+                        if (todoUrl == openTab.url) { // tab is already open
+                            //chrome.tabs.move(openTab.id, { index: -1 }, function() {}); // move tab to the front
+                            chrome.tabs.update(openTab.id, { pinned: true }); // pin tab
+                            tabIsOpen = true;
+                        }
+                    });
+                    
+                    if (!tabIsOpen) {
+                        chrome.tabs.create({ url: todoUrl, active: false, pinned: true }, function() {});
+                    }
+                });
+            });
             // open all tabs
-            chrome.windows.create({ url: tabsArr }, function() {});
+            //chrome.windows.create({ url: tabsArr }, function() {});
         });
     },
 

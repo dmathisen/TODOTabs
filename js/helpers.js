@@ -1,6 +1,7 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.Helpers = {
+    // TODO: create helper functions for chrome apis?
     getTabs: function(callback) {
         chrome.tabs.query({ currentWindow: true }, callback);
     },

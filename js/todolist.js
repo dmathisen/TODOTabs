@@ -13,7 +13,7 @@ TODOTabs.TodoList = {
                 if (!tab.incognito && tab.title !== "New Tab") {
                     Todo.addTab({
                         id: tab.id,
-                        title: tab.title.replace(' - Google Chrome', '').replace(/(<([^>]+)>)/ig, ''), // remove Chrome text and strip tags,
+                        title: tab.title,
                         url: tab.url,
                         complete: false
                     });
@@ -93,6 +93,7 @@ TODOTabs.TodoList = {
     },
 
     // get
+    // TODO: does this belong in helpers?
     getAllTodos: function(callback) {
         chrome.storage.sync.get(null, callback);
     },
@@ -102,7 +103,7 @@ TODOTabs.TodoList = {
         chrome.storage.sync.get(id, callback);
     },
 
-    getCurrentTodoId: function(callback) {
+    getCurrentTodoId: function() {
         var id = document.getElementById('todoDropdown').value;
         return id;
     }
