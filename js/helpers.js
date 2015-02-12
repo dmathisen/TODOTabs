@@ -1,9 +1,18 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.Helpers = {
-    // TODO: create helper functions for chrome apis?
     getTabs: function(callback) {
         chrome.tabs.query({ currentWindow: true }, callback);
+    },
+
+    showAlert: function(type, msg) {
+        // TODO: make this work
+        var alertEl = document.querySelector('.alert.alert-' + type);
+        alertEl.classList.add('visible');
+        setTimeout(function() {
+            alertEl.classList.remove('visible');
+            alertEl.classList.add('hidden');
+        }, 2500);
     },
 
     validateTodoName: function() {

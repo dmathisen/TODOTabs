@@ -21,7 +21,7 @@ TODOTabs.TodoList = {
             });
 
             if (!Todo.tabs.length) {
-                alert("You must have at least 1 tab open");
+                TODOTabs.Helpers.showAlert('fail', 'You must have at least 1 tab open');
                 return;
             }
 
