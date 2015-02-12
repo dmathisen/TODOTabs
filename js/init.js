@@ -5,17 +5,35 @@ TODOTabs.Init = {
         TODOTabs.TodoList.getAllTodos(function(todos) {
             // if no todos saved, display message and return
             if (!Object.keys(todos).length) {
-                TODOTabs.View.displayNoTodosMsg();
+                TODOTabs.Helpers.displayNoTodosMsg();
                 return;
             }
 
             for (var id in todos) {
-                TODOTabs.View.addTodoList(todos[id], true);
+                if (todos.hasOwnProperty(id)) {
+                    TODOTabs.View.addTodoList(todos[id], true);
+                }
             }
         });
     },
 
     setupActions: function() {
+        // todo list
+        var todoLists = document.getElementById('todoLists');
+        todoLists.addEventListener('click', function(e) {
+            var classList = e.target.classList,
+                listItem = e.target.parentNode,
+                id = listItem.id;
+
+            if (classList.contains('title')) {
+                TODOTabs.View.openTodoTab(id);
+                e.preventDefault();
+            } else if (classList.contains('todo-status')) {
+                TODOTabs.TodoList.toggleTodoStatus(id, listItem, e);
+                e.stopPropagation();
+            }
+        });
+
         // create new list
         var btnCreateTodo = document.getElementById('createTodo');
         btnCreateTodo.addEventListener('click', TODOTabs.Helpers.validateTodoName);
@@ -24,7 +42,7 @@ TODOTabs.Init = {
         var btnDeleteTodo = document.getElementById('deleteTodo');
         btnDeleteTodo.addEventListener('click', TODOTabs.TodoList.deleteTodo);
 
-        // open todo tabs
+        // open all tabs
         var btnOpenTodoTabs = document.getElementById('openTodoTabs');
         btnOpenTodoTabs.addEventListener('click', TODOTabs.View.openTodoTabs);
 

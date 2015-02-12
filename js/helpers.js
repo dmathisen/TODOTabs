@@ -6,24 +6,6 @@ TODOTabs.Helpers = {
         chrome.tabs.query({ currentWindow: true }, callback);
     },
 
-    setupTodoStatusActions: function(todoId) {
-        var statusCheckboxes = document.querySelectorAll('#' + todoId + ' .todo-status');
-        [].forEach.call(statusCheckboxes, function(checkbox) {
-            checkbox.addEventListener('change', TODOTabs.Helpers.toggleTodoStatus);
-        });
-    },
-
-    toggleTodoStatus: function() {
-        var tabId = this.value;
-        if (this.checked) {
-            TODOTabs.TodoList.setTabProperty(tabId, 'complete', true);
-            this.parentElement.parentElement.classList.add('completed');
-        } else {
-            TODOTabs.TodoList.setTabProperty(tabId, 'complete', false);
-            this.parentElement.parentElement.classList.remove('completed');
-        }
-    },
-
     validateTodoName: function() {
         var name = prompt("List name");
 
