@@ -84,16 +84,17 @@ TODOTabs.TodoList = {
     },
 
     // status
-    tabComplete: function(tab) {
-        //chrome.tabs.remove(tab.id, function() {});
-    },
-
-    tabIncomplete: function(tab) {
-        //chrome.tabs.create({ url: tab.url }, function() {});
+    toggleTodoStatus: function(tabId, li, e) {
+        if (e.target.checked) {
+            this.setTabProperty(tabId, 'complete', true);
+            li.classList.add('completed');
+        } else {
+            this.setTabProperty(tabId, 'complete', false);
+            li.classList.remove('completed');
+        }
     },
 
     // get
-    // TODO: does this belong in helpers?
     getAllTodos: function(callback) {
         chrome.storage.sync.get(null, callback);
     },

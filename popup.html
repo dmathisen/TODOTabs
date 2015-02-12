@@ -41,15 +41,13 @@
         <h3>{{ name }}</h3>
         <ul>
             {{ #tabs }}
-            <li class="{{ completedClass }}">
+            <li id="{{ id }}" class="{{ completedClass }}">
                 <div class="item-actions">
                     <a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a>
                 </div>
-                <label>
-                    <input type="checkbox" class="todo-status" value="{{ id }}" {{ checked }} />
-                    <span class="title">{{ title }}</span>
-                    <span class="note">{{ domain }}</span>
-                </label>
+                <input type="checkbox" class="todo-status" {{ checked }} />
+                <a class="title" href="#">{{ title }}</a>
+                <p class="note">{{ domain }}</p>
             </li>
             {{ /tabs }}
         </ul>
