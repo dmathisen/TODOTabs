@@ -44,6 +44,24 @@ TODOTabs.TodoList = {
         });
     },
 
+    // TODO
+    removeTodoItem: function(tabId) {
+        this.getCurrentTodo(function(todos) {
+            var tabId = tabId,
+                id = TODOTabs.TodoList.getCurrentTodoId(),
+                todo = todos[id];
+            
+            var tabIndex = todo.tabs.map(function(tab, index) {
+                if (tab.id == tabId) {
+                    return index;
+                }
+            }).filter(isFinite);
+
+            var one = 1;
+        });
+
+    },
+
     clearTodos: function() {
         chrome.storage.sync.clear();
     },
@@ -60,13 +78,13 @@ TODOTabs.TodoList = {
         })
     },
 
-    setTabProperty: function(tabId, key, value) {
+    setItemProperty: function(itemId, key, value) {
         var self = this;
         this.getCurrentTodo(function(todos) {
             var id = TODOTabs.TodoList.getCurrentTodoId(),
                 todo = todos[id],
                 tab = todo.tabs.filter(function(tab) {
-                    return tab.id == tabId;
+                    return tab.id == itemId;
                 });
 
             tab[0][key] = value;
@@ -80,16 +98,16 @@ TODOTabs.TodoList = {
                     self.tabIncomplete(tab[0]);
                 }
             }
-        })
+        });
     },
 
     // status
     toggleTodoStatus: function(tabId, li, e) {
         if (e.target.checked) {
-            this.setTabProperty(tabId, 'complete', true);
+            this.setItemProperty(tabId, 'complete', true);
             li.classList.add('completed');
         } else {
-            this.setTabProperty(tabId, 'complete', false);
+            this.setItemProperty(tabId, 'complete', false);
             li.classList.remove('completed');
         }
     },

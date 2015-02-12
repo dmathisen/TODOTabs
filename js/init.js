@@ -28,9 +28,13 @@ TODOTabs.Init = {
             if (classList.contains('title')) {
                 TODOTabs.View.openTodoTab(id);
                 e.preventDefault();
-            } else if (classList.contains('todo-status')) {
+            } else if (classList.contains('status')) {
                 TODOTabs.TodoList.toggleTodoStatus(id, listItem, e);
                 e.stopPropagation();
+            } else if (classList.contains('remove')) {
+                var id = e.target.parentNode.parentNode.parentNode.id;
+                TODOTabs.TodoList.removeTodoItem(id);
+                e.preventDefault();
             }
         });
 

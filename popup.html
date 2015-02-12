@@ -43,9 +43,12 @@
             {{ #tabs }}
             <li id="{{ id }}" class="{{ completedClass }}">
                 <div class="item-actions">
-                    <a href="#" id="removeTodoItem"><i class="fa fa-times-circle-o fa-lg"></i><span class="sr-only">Remove Item</span></a>
+                    <a href="#">
+                        <span class="sr-only">Remove Item</span>
+                        <i class="remove fa fa-times-circle-o fa-lg"></i>
+                    </a>
                 </div>
-                <input type="checkbox" class="todo-status" {{ checked }} />
+                <input type="checkbox" class="status" {{ checked }} />
                 <a class="title" href="#">{{ title }}</a>
                 <p class="note">{{ domain }}</p>
             </li>
