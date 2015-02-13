@@ -5,15 +5,27 @@ TODOTabs.View = {
         TODOTabs.TodoList.getCurrentTodo(function(todos) {
             var todoId = TODOTabs.TodoList.getCurrentTodoId(),
                 todo = todos[todoId],
-                tab = todo.tabs.filter(function (tab) {
+                tab = todo.tabs.filter(function(tab) {
                     return tab.id == tabId;
                 });
-            chrome.tabs.create({ url: tab[0].url, active: false }, function() {});
+
+            TODOTabs.Helpers.getTabs(function(openTabs) {
+                var tabIsOpen = false;
+                openTabs.forEach(function(openTab) {
+                    if (openTab.url == tab[0].url) {
+                        chrome.tabs.update(openTab.id, { active: true });
+                        tabIsOpen = true;
+                    }
+                });
+
+                if (!tabIsOpen) {
+                    chrome.tabs.create({ url: tab[0].url });
+                }
+            });
         });
     },
 
     openTodoTabs: function() {
-        // TODO: this needs work
         TODOTabs.TodoList.getCurrentTodo(function(todos) {
             var id = TODOTabs.TodoList.getCurrentTodoId(),
                 todo = todos[id];
@@ -21,39 +33,8 @@ TODOTabs.View = {
                     return tab.url
                 });
 
-            TODOTabs.Helpers.getTabs(function (openTabs) {
-                todoUrls.forEach(function(todoUrl) {
-                    var tabIsOpen = false;
-                    openTabs.filter(function(openTab) {
-                        if (todoUrl == openTab.url) { // tab is already open
-                            chrome.tabs.move(openTab.id, { index: -1 }, function() {}); // move tab to the front
-                            //chrome.tabs.update(openTab.id, { pinned: true }); // pin tab
-                            tabIsOpen = true;
-                        }
-                    });
-
-                    if (!tabIsOpen) {
-                        chrome.tabs.create({ url: todoUrl, active: false }, function() {});
-                        //chrome.tabs.create({ url: todoUrl, active: false, pinned: true }, function() {});
-                    }
-                });
-            });
+            chrome.windows.create({ url: todoUrls });
         });
-
-        // attempt at opening existing tabs in background window
-        //TODOTabs.Helpers.getTabs(function(openTabs) {
-        //    var openTabUrls = [],
-        //        openTabIds = [];
-        //
-        //    openTabs.forEach(function(tab) {
-        //        openTabUrls.push(tab.url);
-        //        openTabIds.push(tab.id);
-        //    });
-        //
-        //    chrome.windows.create({ url: openTabUrls, focused: false });
-        //
-        //    var one = 1;
-        //});
     },
 
     addTodoList: function(todo, init) {
