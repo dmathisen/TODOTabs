@@ -17,6 +17,18 @@ TODOTabs.Helpers = {
         }, 3500);
     },
 
+    openSettings: function() {
+        var settingsEl = document.getElementById('settingsWrapper');
+        settingsEl.classList.add('visible');
+        settingsEl.classList.remove('hidden');
+    },
+
+    closeSettings: function() {
+        var settingsEl = document.getElementById('settingsWrapper');
+        settingsEl.classList.add('hidden');
+        settingsEl.classList.remove('visible');
+    },
+
     validateTodoName: function() {
         var name = prompt("Todo name");
         if (!name) {

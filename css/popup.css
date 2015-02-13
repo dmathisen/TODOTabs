@@ -110,6 +110,49 @@ h3 {
     display: block;
 }
 
+/* settings */
+.todo-settings-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(0,0,0,.5);
+}
+.todo-settings {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+    padding: 2px 5px;
+    border: 2px solid #545454;
+    border-radius: 3px;
+    background-color: #fff;
+}
+.todo-settings-close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 0.75em;
+    border: 1px solid #D55633;
+    border-radius: 50%;
+    background-color: #D55633;
+    box-shadow: 0 1px 25px #666;
+    z-index: 2;
+}
+.todo-settings-close:hover {
+    border-color: #fff;
+}
+.todo-settings-close .fa {
+    color: #fff;
+}
+
 /* alert */
 .alert {
     opacity: 0;
@@ -120,17 +163,6 @@ h3 {
     border-radius: 4px;
     box-shadow: 0 2px 6px #999;
 }
-.alert.visible {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity .15s linear;
-}
-.alert.hidden {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s .5s, opacity .5s linear;
-}
-
 .alert-success {
     color: #69A97E;
     background-color: #90B695;
@@ -165,6 +197,17 @@ h3 {
 }
 
 /* helpers */
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .2s linear;
+}
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s .35s, opacity .35s linear;
+}
+
 .note {
     font-size: .875em;
     color: #999;

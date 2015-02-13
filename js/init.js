@@ -32,27 +32,18 @@ TODOTabs.Init = {
                 TODOTabs.TodoList.toggleTodoStatus(id, listItem, e);
                 e.stopPropagation();
             } else if (classList.contains('remove')) {
-                var id = e.target.parentNode.parentNode.parentNode.id;
+                id = e.target.parentNode.parentNode.parentNode.id;
                 TODOTabs.TodoList.removeTodoItem(id);
                 e.preventDefault();
             }
         });
 
-        // create new list
-        var btnCreateTodo = document.getElementById('createTodo');
-        btnCreateTodo.addEventListener('click', TODOTabs.Helpers.validateTodoName);
-
-        // delete list
-        var btnDeleteTodo = document.getElementById('deleteTodo');
-        btnDeleteTodo.addEventListener('click', TODOTabs.TodoList.deleteTodo);
-
-        // open all tabs
-        var btnOpenTodoTabs = document.getElementById('openTodoTabs');
-        btnOpenTodoTabs.addEventListener('click', TODOTabs.View.openTodoTabs);
-
-        // toggle lists
-        var dropdown = document.getElementById('todoDropdown');
-        dropdown.addEventListener('change', TODOTabs.View.toggleLists);
+        document.getElementById('createTodo').addEventListener('click', TODOTabs.Helpers.validateTodoName);
+        document.getElementById('deleteTodo').addEventListener('click', TODOTabs.TodoList.deleteTodo);
+        document.getElementById('openTodoTabs').addEventListener('click', TODOTabs.View.openTodoTabs);
+        document.getElementById('openSettings').addEventListener('click', TODOTabs.Helpers.openSettings);
+        document.getElementById('closeSettings').addEventListener('click', TODOTabs.Helpers.closeSettings);
+        document.getElementById('todoDropdown').addEventListener('change', TODOTabs.View.toggleLists);
     }
 };
 

@@ -6,64 +6,75 @@
     <link href="css/font-awesome-4.3.0.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="alert alert-success hidden"></div>
-    <div class="alert alert-warn hidden"></div>
-    <div class="alert alert-error hidden"></div>
 
-    <div class="main-popup">
-        <h1>TODOTabs <span>Your lists</span></h1>
+<div class="alert alert-success hidden"></div>
+<div class="alert alert-warn hidden"></div>
+<div class="alert alert-error hidden"></div>
 
-        <!-- actions wrapper -->
-        <div class="actions-wrapper" id="actionsWrapper">
-            <!-- actions -->
-            <div class="todo-actions">
-                <a href="#" id="settings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
-                <a href="#" id="alarm"><i class="fa fa-bell fa-lg"></i><span class="sr-only">Alarm</span></a>
-                <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
-            </div>
+<div id="settingsWrapper" class="todo-settings-wrapper hidden">
+    <a href="#" id="closeSettings" class="todo-settings-close"><i class="fa fa-times"></i><span class="sr-only">Close settings</span></a>
+    <div id="settings" class="todo-settings"></div>
+</div>
 
-            <!-- dropdown -->
-            <label class="sr-only" for="todoDropdown">Your lists</label>
-            <select id="todoDropdown" class="todo-dropdown">
-                <option value="-1">Select a todo list...</option>
-            </select>
+<div class="main-popup">
+    <h1>TODOTabs <span>Your lists</span></h1>
 
-            <a href="#" id="openTodoTabs"><i class="fa fa-external-link-square fa-lg"></i><span class="sr-only">Open all todo items</span></a>
+    <!-- actions wrapper -->
+    <div class="actions-wrapper" id="actionsWrapper">
+        <!-- actions -->
+        <div class="todo-actions">
+            <a href="#" id="openSettings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
+            <a href="#" id="alarm"><i class="fa fa-bell fa-lg"></i><span class="sr-only">Alarm</span></a>
+            <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
         </div>
 
-        <!-- no todos found -->
-        <p class="no-todos" id="noTodos">There are no saved lists, please create a new one</p>
+        <!-- dropdown -->
+        <label class="sr-only" for="todoDropdown">Your lists</label>
+        <select id="todoDropdown" class="todo-dropdown">
+            <option value="-1">Select a todo list...</option>
+        </select>
 
-        <!-- lists -->
-        <div class="todo-lists" id="todoLists"></div>
-
-        <!-- new todo btn -->
-        <button id="createTodo" class="btn btn-primary">New Todo List</button>
+        <a href="#" id="openTodoTabs"><i class="fa fa-external-link-square fa-lg"></i><span class="sr-only">Open all todo items</span></a>
     </div>
 
-    <script id="todoListTemplate" type="x-mustache-template">
-        <h3>{{ name }}</h3>
-        <ul>
-            {{ #tabs }}
-            <li id="{{ id }}" class="{{ completedClass }}">
-                <div class="item-actions">
-                    <a href="#">
-                        <span class="sr-only">Remove Item</span>
-                        <i class="remove fa fa-times-circle-o fa-lg"></i>
-                    </a>
-                </div>
-                <input type="checkbox" class="status" {{ checked }} />
-                <a class="title" href="#">{{ title }}</a>
-                <p class="note">{{ domain }}</p>
-            </li>
-            {{ /tabs }}
-        </ul>
-    </script>
+    <!-- no todos found -->
+    <p class="no-todos" id="noTodos">There are no saved lists, please create a new one</p>
 
-    <script src="js/lib/mustache.min.js"></script>
-    <script src="js/todolist.js"></script>
-    <script src="js/view.js"></script>
-    <script src="js/helpers.js"></script>
-    <script src="js/init.js"></script>
+    <!-- lists -->
+    <div class="todo-lists" id="todoLists"></div>
+
+    <!-- new todo btn -->
+    <button id="createTodo" class="btn btn-primary">New Todo List</button>
+</div>
+
+<script id="todoListTemplate" type="x-mustache-template">
+    <h3>{{ name }}</h3>
+    <ul>
+        {{ #tabs }}
+        <li id="{{ id }}" class="{{ completedClass }}">
+            <div class="item-actions">
+                <a href="#">
+                    <span class="sr-only">Remove Item</span>
+                    <i class="remove fa fa-times-circle-o fa-lg"></i>
+                </a>
+            </div>
+            <input type="checkbox" class="status" {{ checked }} />
+            <a class="title" href="#">{{ title }}</a>
+            <p class="note">{{ domain }}</p>
+        </li>
+        {{ /tabs }}
+    </ul>
+</script>
+
+<script id="todoSettingsTemplate" type="x-mustache-template">
+
+</script>
+
+<script src="js/lib/mustache.min.js"></script>
+<script src="js/todolist.js"></script>
+<script src="js/view.js"></script>
+<script src="js/helpers.js"></script>
+<script src="js/init.js"></script>
+
 </body>
 </html>
