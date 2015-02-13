@@ -160,23 +160,24 @@ h3 {
     top: 5px;
     right: 5px;
     padding: 1px 8px 3px;
+    border: 1px solid;
     border-radius: 4px;
-    box-shadow: 0 2px 6px #999;
+    box-shadow: 0 2px 15px #ccc;
 }
 .alert-success {
     color: #69A97E;
-    background-color: #90B695;
-    border: 1px solid #69A97E;
+    background-color: #D8F4DB;
+    border-color: #AEE4C0;
 }
 .alert-warn {
-    color: #7F752C;
-    background-color: #E8DD8E;
-    border: 1px solid #D8CB6D;
+    color: #9B935A;
+    background-color: #F7EFB8;
+    border-color: #DACF82;
 }
 .alert-error {
     color: #FFF;
     background-color: #DF8B8B;
-    border: 1px solid #C57C7C;
+    border-color: #C57C7C;
 }
 
 /* components */
