@@ -6,27 +6,28 @@ TODOTabs.Helpers = {
     },
 
     showAlert: function(type, msg) {
-        // TODO: make this work
         var alertEl = document.querySelector('.alert.alert-' + type);
+        alertEl.innerHTML = msg;
+
         alertEl.classList.add('visible');
+        alertEl.classList.remove('hidden');
         setTimeout(function() {
             alertEl.classList.remove('visible');
             alertEl.classList.add('hidden');
-        }, 2500);
+        }, 3500);
     },
 
     validateTodoName: function() {
-        var name = prompt("List name");
-
+        var name = prompt("Todo name");
         if (!name) {
-            alert('Please enter a list name');
+            TODOTabs.Helpers.showAlert('error', 'Please enter a list name');
             return;
         }
 
         // get all todos and compare names
         TODOTabs.TodoList.getAllTodos(function(todos) {
             if (todos['list-' + name]) {
-                alert('A list with the name "' + name + '" exists, please choose a new name');
+                TODOTabs.Helpers.showAlert('error', 'A list with the name "' + name + '" exists, please choose a new name');
                 return;
             }
 

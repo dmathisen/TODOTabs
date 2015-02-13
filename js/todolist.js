@@ -21,7 +21,7 @@ TODOTabs.TodoList = {
             });
 
             if (!Todo.tabs.length) {
-                TODOTabs.Helpers.showAlert('fail', 'You must have at least 1 tab open');
+                TODOTabs.Helpers.showAlert('error', 'You must have at least 1 tab open');
                 return;
             }
 
@@ -33,13 +33,16 @@ TODOTabs.TodoList = {
     saveTodo: function(todo) {
         this.getAllTodos(function(todos) {
             todos[todo.id] = todo; // add new todo to existing set
-            chrome.storage.sync.set(todos, function(todo) {});
+            chrome.storage.sync.set(todos, function() {
+                TODOTabs.Helpers.showAlert('success', 'Todo saved');
+            });
         })
     },
 
     deleteTodo: function() {
         var currentItemId = TODOTabs.TodoList.getCurrentTodoId();
         chrome.storage.sync.remove(currentItemId, function() {
+            TODOTabs.Helpers.showAlert('success', 'Todo deleted');
             TODOTabs.View.removeTodoList(currentItemId);
         });
     },
