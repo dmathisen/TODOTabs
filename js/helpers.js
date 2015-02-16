@@ -11,6 +11,7 @@ TODOTabs.Helpers = {
 
         alertEl.classList.add('visible');
         alertEl.classList.remove('hidden');
+
         setTimeout(function() {
             alertEl.classList.remove('visible');
             alertEl.classList.add('hidden');
@@ -21,6 +22,8 @@ TODOTabs.Helpers = {
         var settingsEl = document.getElementById('settingsWrapper');
         settingsEl.classList.add('visible');
         settingsEl.classList.remove('hidden');
+
+        TODOTabs.View.renderSettings();
     },
 
     closeSettings: function() {

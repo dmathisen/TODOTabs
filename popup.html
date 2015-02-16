@@ -7,19 +7,6 @@
 </head>
 <body>
 
-<div class="alert alert-success hidden"></div>
-<div class="alert alert-warn hidden"></div>
-<div class="alert alert-error hidden"></div>
-
-<div id="settingsWrapper" class="todo-settings-wrapper hidden">
-    <a href="#" id="closeSettings" class="todo-settings-close"><i class="fa fa-times"></i><span class="sr-only">Close settings</span></a>
-    <div id="settings" class="todo-settings">
-        <div>
-            <label>Todo Name</label> <input type="text" name="todoName" />
-        </div>
-    </div>
-</div>
-
 <div class="main-popup">
     <h1>TODOTabs <span>Your lists</span></h1>
 
@@ -51,6 +38,18 @@
     <button id="createTodo" class="btn btn-primary">New Todo List</button>
 </div>
 
+<!-- alerts -->
+<div class="alert alert-success hidden"></div>
+<div class="alert alert-warn hidden"></div>
+<div class="alert alert-error hidden"></div>
+
+<!-- settings -->
+<div id="settingsWrapper" class="todo-settings-wrapper hidden">
+    <a href="#" id="closeSettings" class="todo-settings-close"><i class="fa fa-times"></i><span class="sr-only">Close settings</span></a>
+    <div id="todoSettings" class="todo-settings"></div>
+</div>
+
+<!-- templates -->
 <script id="todoListTemplate" type="x-mustache-template">
     <h3>{{ name }}</h3>
     <ul>
@@ -62,7 +61,8 @@
                     <i class="remove fa fa-times-circle-o fa-lg"></i>
                 </a>
             </div>
-            <input type="checkbox" class="status" {{ checked }} />
+            <label for="todoStatus" class="sr-only">Todo Status</label>
+            <input type="checkbox" class="status" id="todoStatus" {{ checked }} />
             <a class="title" href="#">{{ title }}</a>
             <p class="note">{{ domain }}</p>
         </li>
@@ -71,7 +71,37 @@
 </script>
 
 <script id="todoSettingsTemplate" type="x-mustache-template">
-
+    <div>
+        <label for="todoName" class="sr-only">Todo Name</label>
+        <input type="text" class="settings-name" id="todoName" name="todoName" value="{{ name }}" />
+    </div>
+    <div>
+        <label>
+            <span>Due Date</span>
+            <input type="date" class="settings-duedate" id="todoDueDate" name="todoDueDate" />
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Repeat</span>
+            <select>
+                <option value="never">Never</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="annually">Annually</option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Notes</span>
+            <textarea id="todoNotes" name="todoNotes"></textarea>
+        </label>
+    </div>
+    <div>
+        <button id="saveTodoSettings" class="btn btn-primary">Save</button>
+    </div>
 </script>
 
 <script src="js/lib/mustache.min.js"></script>

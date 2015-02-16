@@ -118,8 +118,7 @@ TODOTabs.View = {
         todoEl.setAttribute('class', 'todo');
         todoEl.setAttribute('id', todo.id);
 
-        // cache template
-        Mustache.parse(listTemplate);
+        Mustache.parse(listTemplate); // cache template
 
         todoData = {
             id: todo.id,
@@ -140,5 +139,24 @@ TODOTabs.View = {
 
         todoEl.innerHTML = Mustache.render(listTemplate, todoData);
         lists.insertBefore(todoEl, lists.firstChild);
+    },
+
+    renderSettings: function() {
+        TODOTabs.TodoList.getCurrentTodo(function(todos) {
+            var id = TODOTabs.TodoList.getCurrentTodoId(),
+                todo = todos[id];
+
+            var settings = document.getElementById('todoSettings'),
+                settingsTemplate = document.getElementById('todoSettingsTemplate').innerHTML;
+
+            Mustache.parse(settingsTemplate); // cache template
+
+            todoData = {
+                name: todo.name
+            };
+
+            var rendered = Mustache.render(settingsTemplate, todoData);
+            settings.innerHTML = rendered;
+        });
     }
 };

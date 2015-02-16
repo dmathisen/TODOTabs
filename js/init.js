@@ -41,9 +41,10 @@ TODOTabs.Init = {
         document.getElementById('createTodo').addEventListener('click', TODOTabs.Helpers.validateTodoName);
         document.getElementById('deleteTodo').addEventListener('click', TODOTabs.TodoList.deleteTodo);
         document.getElementById('openTodoTabs').addEventListener('click', TODOTabs.View.openTodoTabs);
+        document.getElementById('todoDropdown').addEventListener('change', TODOTabs.View.toggleLists);
+
         document.getElementById('openSettings').addEventListener('click', TODOTabs.Helpers.openSettings);
         document.getElementById('closeSettings').addEventListener('click', TODOTabs.Helpers.closeSettings);
-        document.getElementById('todoDropdown').addEventListener('change', TODOTabs.View.toggleLists);
     }
 };
 
