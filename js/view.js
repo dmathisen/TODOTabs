@@ -42,9 +42,8 @@ TODOTabs.View = {
         this.addToDropdownList(todo);
         this.removeNoTodosMsg();
 
-        // show "select a list" on initial load
         if (!init) {
-            this.showLatestTodo();
+            this.showTodoByIndex(0);
         }
     },
 
@@ -57,8 +56,11 @@ TODOTabs.View = {
 
     addToDropdownList: function(todo) {
         var dropdown = document.getElementById('todoDropdown'),
-            optionsHtml = '<option value="' + todo.id + '">' + todo.name + '</option>';
-        dropdown.firstElementChild.insertAdjacentHTML('afterend', optionsHtml);
+            optionsEl = document.createElement('option');
+        optionsEl.value = todo.id;
+        optionsEl.innerHTML = todo.name;
+
+        dropdown.insertBefore(optionsEl, dropdown.firstChild);
     },
 
     removeFromDropdownList: function(id) {
@@ -66,7 +68,7 @@ TODOTabs.View = {
             item = document.querySelector('#todoDropdown option[value="' + id + '"]');
         dropdown.removeChild(item);
 
-        if (dropdown.length == 1) {
+        if (!dropdown.length) {
             this.displayNoTodosMsg();
         }
     },
@@ -92,22 +94,32 @@ TODOTabs.View = {
             todo.style.display = 'none';
         });
 
-        if (id == -1) {
-            return;
+        // show selected list
+        if (id) {
+            document.getElementById(id).style.display = 'block';
+            localStorage.setItem('TODOTabsLastViewed', id);
         }
-
-        // shot selected list
-        document.getElementById(id).style.display = 'block';
     },
 
-    showLatestTodo: function() {
+    showTodoByIndex: function(id) {
         var dropdown = document.getElementById('todoDropdown');
-        dropdown.selectedIndex = 1;
+        dropdown.selectedIndex = id;
 
         // trigger change
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent("change", false, true);
         dropdown.dispatchEvent(evt);
+    },
+
+    showLastViewedTodo: function() {
+        var self = this;
+            dropdown = document.getElementById('todoDropdown');
+
+        [].forEach.call(dropdown.options, function(option, index) {
+            if(option.value == localStorage.getItem('TODOTabsLastViewed')) {
+                self.showTodoByIndex(index);
+            }
+        });
     },
 
     renderTodoList: function(todo) {

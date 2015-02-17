@@ -9,10 +9,19 @@ TODOTabs.Init = {
                 return;
             }
 
+            // for each todo, build html and add to dropdown
             for (var id in todos) {
                 if (todos.hasOwnProperty(id)) {
                     TODOTabs.View.addTodoList(todos[id], true);
                 }
+            }
+
+            // show either last viewed todo or first one
+            var lastViewedTodo = localStorage.getItem('TODOTabsLastViewed');
+            if (lastViewedTodo) {
+                TODOTabs.View.showLastViewedTodo();
+            } else {
+                TODOTabs.View.showTodoByIndex(0);
             }
         });
     },

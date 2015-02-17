@@ -94,13 +94,13 @@ TODOTabs.TodoList = {
             self.saveTodo(todo);
 
             // if tab is marked as complete
-            if (key === "complete") {
-                if (value == true) {
-                    self.tabComplete(tab[0]);
-                } else {
-                    self.tabIncomplete(tab[0]);
-                }
-            }
+            //if (key === "complete") {
+            //    if (value == true) {
+            //        self.tabComplete(tab[0]);
+            //    } else {
+            //        self.tabIncomplete(tab[0]);
+            //    }
+            //}
         });
     },
 
