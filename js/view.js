@@ -144,19 +144,25 @@ TODOTabs.View = {
     renderSettings: function() {
         TODOTabs.TodoList.getCurrentTodo(function(todos) {
             var id = TODOTabs.TodoList.getCurrentTodoId(),
-                todo = todos[id];
-
-            var settings = document.getElementById('todoSettings'),
+                todo = todos[id],
+                settingsEl = document.getElementById('todoSettings'),
                 settingsTemplate = document.getElementById('todoSettingsTemplate').innerHTML;
 
             Mustache.parse(settingsTemplate); // cache template
 
             todoData = {
-                name: todo.name
+                name: todo.name,
+                dueDate: todo.dueDate,
+                dueTime: todo.dueTime,
+                repeat: todo.repeat,
+                notes: todo.notes
             };
 
-            var rendered = Mustache.render(settingsTemplate, todoData);
-            settings.innerHTML = rendered;
+            // render template
+            settingsEl.innerHTML = Mustache.render(settingsTemplate, todoData);
+
+            // select proper "repeat" option
+            document.querySelector('#todoRepeat option[value="' + todo.repeat + '"]').setAttribute('selected', 'selected');
         });
     }
 };

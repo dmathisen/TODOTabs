@@ -120,7 +120,7 @@ h3 {
     z-index: 1;
     background: rgba(0,0,0,0.65);
 }
-.todo-settings {
+.todo-settings-inner {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -131,8 +131,8 @@ h3 {
 }
 .todo-settings-close {
     position: absolute;
-    right: 15px;
-    top: 15px;
+    right: -1em;
+    top: -1em;
     width: 15px;
     height: 15px;
     line-height: 15px;
@@ -151,6 +151,10 @@ h3 {
     color: #fff;
 }
 
+.todo-settings-save {
+    margin: 10px;
+}
+
 .todo-settings > div:nth-child(n+2) {
     padding: 10px;
 }
@@ -161,6 +165,9 @@ h3 {
     padding: 3px;
     border: 1px solid #ccc;
     border-radius: 3px;
+}
+.todo-settings > div:nth-child(n+2) select {
+    box-sizing: content-box;
 }
 .todo-settings > div span {
     display: inline-block;

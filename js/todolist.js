@@ -104,6 +104,22 @@ TODOTabs.TodoList = {
         });
     },
 
+    saveTodoSettings: function() {
+        TODOTabs.TodoList.getCurrentTodo(function(todos) {
+            var id = TODOTabs.TodoList.getCurrentTodoId(),
+                todo = todos[id];
+
+            todo.name = document.querySelector('#todoSettings #todoName').value;
+            todo.dueDate = document.querySelector('#todoSettings #todoDueDate').value;
+            todo.dueTime = document.querySelector('#todoSettings #todoDueTime').value;
+            todo.repeat = document.querySelector('#todoSettings #todoRepeat').value;
+            todo.notes = document.querySelector('#todoSettings #todoNotes').value;
+
+            TODOTabs.Helpers.closeTodoSettings();
+            TODOTabs.TodoList.saveTodo(todo);
+        })
+    },
+
     // status
     toggleTodoStatus: function(tabId, li, e) {
         if (e.target.checked) {
@@ -126,8 +142,7 @@ TODOTabs.TodoList = {
     },
 
     getCurrentTodoId: function() {
-        var id = document.getElementById('todoDropdown').value;
-        return id;
+        return document.getElementById('todoDropdown').value;
     }
 };
 
@@ -136,6 +151,10 @@ TODOTabs.TodoList.Todo = function(name) {
     this.id = 'list-' + this.name.replace(/[^\w]/gi, '-'); // TODO: unique ids for all lists?
     this.tabs = [];
     this.complete = false;
+    this.dueDate = '';
+    this.dueTime = '';
+    this.repeat = '';
+    this.notes = '';
 };
 TODOTabs.TodoList.Todo.prototype.addTab = function(tab) {
     this.tabs.push(tab)

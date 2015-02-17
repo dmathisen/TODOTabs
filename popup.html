@@ -14,7 +14,7 @@
     <div class="actions-wrapper" id="actionsWrapper">
         <!-- actions -->
         <div class="todo-actions">
-            <a href="#" id="openSettings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
+            <a href="#" id="openTodoSettings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
             <a href="#" id="alarm"><i class="fa fa-bell fa-lg"></i><span class="sr-only">Alarm</span></a>
             <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
         </div>
@@ -29,7 +29,10 @@
     </div>
 
     <!-- no todos found -->
-    <p class="no-todos" id="noTodos">There are no saved lists, please create a new one</p>
+    <div class="no-todos" id="noTodos">
+        <p><strong>First time user?</strong></p>
+        <p>Start by opening a few tabs and clicking "New Todo List"</p>
+    </div>
 
     <!-- lists -->
     <div class="todo-lists" id="todoLists"></div>
@@ -45,8 +48,11 @@
 
 <!-- settings -->
 <div id="settingsWrapper" class="todo-settings-wrapper hidden">
-    <a href="#" id="closeSettings" class="todo-settings-close"><i class="fa fa-times"></i><span class="sr-only">Close settings</span></a>
-    <div id="todoSettings" class="todo-settings"></div>
+    <div class="todo-settings-inner">
+        <a href="#" id="closeTodoSettings" class="todo-settings-close"><i class="fa fa-times"></i><span class="sr-only">Close settings</span></a>
+        <div id="todoSettings" class="todo-settings"></div>
+        <div><button id="saveTodoSettings" class="todo-settings-save btn btn-primary">Save</button></div>
+    </div>
 </div>
 
 <!-- templates -->
@@ -73,18 +79,20 @@
 <script id="todoSettingsTemplate" type="x-mustache-template">
     <div>
         <label for="todoName" class="sr-only">Todo Name</label>
-        <input type="text" class="settings-name" id="todoName" name="todoName" value="{{ name }}" />
+        <input type="text" id="todoName" name="todoName" class="settings-name" value="{{ name }}" />
     </div>
     <div>
         <label>
             <span>Due Date</span>
-            <input type="date" class="settings-duedate" id="todoDueDate" name="todoDueDate" />
+            <input type="date" id="todoDueDate" name="todoDueDate" value="{{ dueDate }}" style="margin-bottom: 5px;">
+            <span></span>
+            <input type="time" id="todoDueTime" name="todoDueTime" value="{{ dueTime }}" />
         </label>
     </div>
     <div>
         <label>
             <span>Repeat</span>
-            <select>
+            <select id="todoRepeat">
                 <option value="never">Never</option>
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
@@ -96,11 +104,8 @@
     <div>
         <label>
             <span>Notes</span>
-            <textarea id="todoNotes" name="todoNotes"></textarea>
+            <textarea id="todoNotes" name="todoNotes">{{ notes }}</textarea>
         </label>
-    </div>
-    <div>
-        <button id="saveTodoSettings" class="btn btn-primary">Save</button>
     </div>
 </script>
 

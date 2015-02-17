@@ -18,7 +18,7 @@ TODOTabs.Helpers = {
         }, 3500);
     },
 
-    openSettings: function() {
+    openTodoSettings: function() {
         var settingsEl = document.getElementById('settingsWrapper');
         settingsEl.classList.add('visible');
         settingsEl.classList.remove('hidden');
@@ -26,7 +26,7 @@ TODOTabs.Helpers = {
         TODOTabs.View.renderSettings();
     },
 
-    closeSettings: function() {
+    closeTodoSettings: function() {
         var settingsEl = document.getElementById('settingsWrapper');
         settingsEl.classList.add('hidden');
         settingsEl.classList.remove('visible');

@@ -5,7 +5,7 @@ TODOTabs.Init = {
         TODOTabs.TodoList.getAllTodos(function(todos) {
             // if no todos saved, display message and return
             if (!Object.keys(todos).length) {
-                TODOTabs.Helpers.displayNoTodosMsg();
+                TODOTabs.View.displayNoTodosMsg();
                 return;
             }
 
@@ -43,8 +43,9 @@ TODOTabs.Init = {
         document.getElementById('openTodoTabs').addEventListener('click', TODOTabs.View.openTodoTabs);
         document.getElementById('todoDropdown').addEventListener('change', TODOTabs.View.toggleLists);
 
-        document.getElementById('openSettings').addEventListener('click', TODOTabs.Helpers.openSettings);
-        document.getElementById('closeSettings').addEventListener('click', TODOTabs.Helpers.closeSettings);
+        document.getElementById('openTodoSettings').addEventListener('click', TODOTabs.Helpers.openTodoSettings);
+        document.getElementById('closeTodoSettings').addEventListener('click', TODOTabs.Helpers.closeTodoSettings);
+        document.getElementById('saveTodoSettings').addEventListener('click', TODOTabs.TodoList.saveTodoSettings);
     }
 };
 
