@@ -77,22 +77,24 @@
 </script>
 
 <script id="todoSettingsTemplate" type="x-mustache-template">
-    <div>
+    <div class="settings-name-wrapper">
         <label for="todoName" class="sr-only">Todo Name</label>
-        <input type="text" id="todoName" name="todoName" class="settings-name" value="{{ name }}" />
+        <input type="text" id="todoName" name="todoName" class="settings-input settings-name" value="{{ name }}" />
     </div>
     <div>
         <label>
             <span>Due Date</span>
-            <input type="date" id="todoDueDate" name="todoDueDate" value="{{ dueDate }}" style="margin-bottom: 5px;">
+            <input type="date" id="todoDueDate" name="todoDueDate" class="settings-input" value="{{ dueDate }}" style="margin-bottom: 5px;">
+        </label>
+        <label>
             <span></span>
-            <input type="time" id="todoDueTime" name="todoDueTime" value="{{ dueTime }}" />
+            <input type="time" id="todoDueTime" name="todoDueTime" class="settings-input" value="{{ dueTime }}" />
         </label>
     </div>
     <div>
         <label>
             <span>Repeat</span>
-            <select id="todoRepeat">
+            <select id="todoRepeat" class="settings-input">
                 <option value="never">Never</option>
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
@@ -104,7 +106,7 @@
     <div>
         <label>
             <span>Notes</span>
-            <textarea id="todoNotes" name="todoNotes">{{ notes }}</textarea>
+            <textarea id="todoNotes" name="todoNotes" class="settings-input settings-notes">{{ notes }}</textarea>
         </label>
     </div>
 </script>

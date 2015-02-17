@@ -129,6 +129,37 @@ h3 {
     border-radius: 3px;
     background-color: #fff;
 }
+
+.todo-settings > div {
+    padding: 10px;
+}
+.todo-settings > div span {
+    display: inline-block;
+    width: 5.5em;
+}
+.todo-settings select {
+    box-sizing: content-box;
+}
+.todo-settings .settings-input {
+    width: 18em;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.todo-settings .settings-name-wrapper {
+    border-bottom: 1px solid #999;
+}
+.todo-settings .settings-name {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 1.5em;
+    border: 0;
+}
+.todo-settings .settings-notes {
+    resize: vertical;
+    min-height: 50px;
+}
+
 .todo-settings-close {
     position: absolute;
     right: -1em;
@@ -153,34 +184,6 @@ h3 {
 
 .todo-settings-save {
     margin: 10px;
-}
-
-.todo-settings > div:nth-child(n+2) {
-    padding: 10px;
-}
-.todo-settings > div:nth-child(n+2) input,
-.todo-settings > div:nth-child(n+2) textarea,
-.todo-settings > div:nth-child(n+2) select {
-    width: 18em;
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-.todo-settings > div:nth-child(n+2) select {
-    box-sizing: content-box;
-}
-.todo-settings > div span {
-    display: inline-block;
-    width: 5.5em;
-}
-
-.settings-name {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px;
-    font-size: 1.5em;
-    border: 0;
-    border-bottom: 1px solid #999;
 }
 
 /* alert */
