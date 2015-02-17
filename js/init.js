@@ -61,4 +61,10 @@ TODOTabs.Init = {
 document.addEventListener('DOMContentLoaded', function () {
     TODOTabs.Init.populateHtml();
     TODOTabs.Init.setupActions();
+
+    // TODO
+    chrome.alarms.onAlarm.addListener(function(e) {
+        alert("ALARM!");
+        console.log(e);
+    })
 });

@@ -107,17 +107,31 @@ TODOTabs.TodoList = {
     saveTodoSettings: function() {
         TODOTabs.TodoList.getCurrentTodo(function(todos) {
             var id = TODOTabs.TodoList.getCurrentTodoId(),
-                todo = todos[id];
+                todo = todos[id],
+                newDueDate = document.querySelector('#todoSettings #todoDueDate').value,
+                newDueTime = document.querySelector('#todoSettings #todoDueTime').value,
+                alarmDateTime = Date.parse(newDueDate + 'T' + newDueTime);
 
             todo.name = document.querySelector('#todoSettings #todoName').value;
-            todo.dueDate = document.querySelector('#todoSettings #todoDueDate').value;
-            todo.dueTime = document.querySelector('#todoSettings #todoDueTime').value;
             todo.repeat = document.querySelector('#todoSettings #todoRepeat').value;
             todo.notes = document.querySelector('#todoSettings #todoNotes').value;
+            todo.dueDate = newDueDate;
+            todo.dueTime = newDueTime;
 
             TODOTabs.Helpers.closeTodoSettings();
             TODOTabs.TodoList.saveTodo(todo);
+
+            // set alarm
+            if (newDueDate) {
+                TODOTabs.TodoList.setTodoAlarm(id, alarmDateTime);
+            }
         })
+    },
+
+    // alarm
+    // TODO
+    setTodoAlarm: function(id, date) {
+        chrome.alarms.create(id, { when: date });
     },
 
     // status
