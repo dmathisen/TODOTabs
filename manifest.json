@@ -1,29 +1,23 @@
 {
-  "name": "TODOTabs",
-  "version": "0.0.1",
-  "manifest_version": 2,
-  "description": "Create TODO lists as a set of Chrome tabs",
-  "homepage_url": "http://danmathisen.com",
-  "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  },
-  "default_locale": "en",
-  // "background": {
-  //   "page": "src/bg/background.html",
-  //   "persistent": false
-  // },
-  //"options_page": "src/options_custom/index.html",
-  "browser_action": {
-    "default_icon": "icons/icon19.png",
-    "default_title": "TODOTabs",
-    "default_popup": "popup.html"
-    // "default_popup": "src/browser_action/browser_action.html"
-  },
-  "permissions": [
-    "storage",
-    "tabs"
-    //"notifications",
-  ]
+    "manifest_version": 2,
+    "name": "TODOTabs",
+    "description": "Create TODO lists as a set of Chrome tabs",
+    "homepage_url": "http://danmathisen.com",
+    "default_locale": "en",
+    "version": "0.0.1",
+    "key": "todotabs001",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "browser_action": {
+        "default_icon": "icons/icon19.png",
+        "default_title": "TODOTabs",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "storage",
+        "tabs"
+    ]
 }
