@@ -48,5 +48,25 @@ TODOTabs.Helpers = {
 
             TODOTabs.TodoList.createTodo(name);
         });
+    },
+
+    formatDate: function(date, time) {
+        var d = date.split('-'),
+            year = d[0],
+            month = d[1],
+            day = d[2];
+
+        var t = time.split(':'),
+            hours = t[0],
+            mins = t[1],
+            timeSuffix = (hours >= 12) ? 'PM' : 'AM';
+        
+        hours = (hours > 12) ? hours - 12 : hours;
+        hours = (hours == '00') ? 12 : hours;
+
+        var formattedDate = month + '/' + day + '/' + year,
+            formattedTime = hours + ':' + mins + ' ' + timeSuffix;
+
+        return (formattedDate + ' ' + formattedTime);
     }
 };

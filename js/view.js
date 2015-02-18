@@ -135,7 +135,13 @@ TODOTabs.View = {
         todoData = {
             id: todo.id,
             name: todo.name,
-            tabs: []
+            tabs: [],
+            hasAlarm: function() {
+                return todo.dueDate ? true : false;
+            },
+            alarm: function() {
+                return TODOTabs.Helpers.formatDate(todo.dueDate, todo.dueTime);
+            }
         };
 
         // add tab to todoData

@@ -15,7 +15,6 @@
         <!-- actions -->
         <div class="todo-actions">
             <a href="#" id="openTodoSettings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
-            <a href="#" id="alarm"><i class="fa fa-bell fa-lg"></i><span class="sr-only">Alarm</span></a>
             <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
         </div>
 
@@ -55,6 +54,13 @@
 
 <!-- templates -->
 <script id="todoListTemplate" type="x-mustache-template">
+    {{ #hasAlarm }}
+    <div class="pull-right alarm">
+        {{ alarm }}
+        <i class="fa fa-bell"></i><span class="sr-only">Alarm</span>
+    </div>
+    {{ /hasAlarm }}
+
     <h3>{{ name }}</h3>
     <ul>
         {{ #tabs }}

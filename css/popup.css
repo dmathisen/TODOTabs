@@ -20,10 +20,6 @@ h3 {
     text-shadow: 1px 1px 2px #7B3622;
 }
 
-.fa {
-    color: #666;
-}
-
 /* main */
 .main-popup {
     position: relative;
@@ -32,6 +28,9 @@ h3 {
 
 .actions-wrapper {
     display: none;
+}
+.actions-wrapper .fa {
+    color: #666;
 }
 .todo-actions {
     float: right;
@@ -88,6 +87,13 @@ h3 {
 .todo-lists .note {
     display: block;
     margin: 0 0 0 2.25em;
+}
+
+.todo-lists .alarm,
+.todo-lists .alert .fa{
+    color: #fff;
+    font-size: .875em;
+    margin: 0.7em 5px 0 0;
 }
 
 .todo-dropdown {
