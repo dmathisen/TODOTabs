@@ -1,6 +1,7 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.View = {
+    // open tabs
     openTodoTab: function(tabId) {
         TODOTabs.TodoList.getCurrentTodo(function(todos) {
             var todoId = TODOTabs.TodoList.getCurrentTodoId(),
@@ -37,54 +38,7 @@ TODOTabs.View = {
         });
     },
 
-    addTodoList: function(todo, init) {
-        this.renderTodoList(todo);
-        this.addToDropdownList(todo);
-        this.removeNoTodosMsg();
-
-        if (!init) {
-            this.showTodoByIndex(0);
-        }
-    },
-
-    removeTodoList: function(id) {
-        var todoWrapper = document.getElementById('todoLists'),
-            todoEl = document.getElementById(id);
-        todoWrapper.removeChild(todoEl);
-        this.removeFromDropdownList(id);
-    },
-
-    addToDropdownList: function(todo) {
-        var dropdown = document.getElementById('todoDropdown'),
-            optionsEl = document.createElement('option');
-        optionsEl.value = todo.id;
-        optionsEl.innerHTML = todo.name;
-
-        dropdown.insertBefore(optionsEl, dropdown.firstChild);
-    },
-
-    removeFromDropdownList: function(id) {
-        var dropdown = document.getElementById('todoDropdown'),
-            item = document.querySelector('#todoDropdown option[value="' + id + '"]');
-        dropdown.removeChild(item);
-
-        if (!dropdown.length) {
-            this.displayNoTodosMsg();
-        }
-    },
-
-    displayNoTodosMsg: function () {
-        document.getElementById('actionsWrapper').style.display = 'none';
-        document.getElementById('todoLists').style.display = 'none';
-        document.getElementById('noTodos').style.display = 'block';
-    },
-
-    removeNoTodosMsg: function () {
-        document.getElementById('actionsWrapper').style.display = 'block';
-        document.getElementById('todoLists').style.display = 'block';
-        document.getElementById('noTodos').style.display = 'none';
-    },
-
+    // show todos
     toggleLists: function() {
         var id = this.value,
             todoLists = document.querySelectorAll('#todoLists .todo');
@@ -112,51 +66,89 @@ TODOTabs.View = {
     },
 
     showLastViewedTodo: function() {
-        var self = this;
+        var self = this,
+            lastViewedTodo = localStorage.getItem('TODOTabsLastViewed'),
             dropdown = document.getElementById('todoDropdown');
 
-        [].forEach.call(dropdown.options, function(option, index) {
-            if(option.value == localStorage.getItem('TODOTabsLastViewed')) {
-                self.showTodoByIndex(index);
-            }
-        });
+        if (lastViewedTodo) {
+            // if last viewed is saved in local storage, display it
+            [].forEach.call(dropdown.options, function(option, index) {
+                if(option.value == localStorage.getItem('TODOTabsLastViewed')) {
+                    self.showTodoByIndex(index);
+                }
+            });
+        } else {
+            // else display first one
+            self.showTodoByIndex(0);
+        }
     },
 
-    renderTodoList: function(todo) {
-        var lists = document.getElementById('todoLists'),
+    // render templates
+    renderTodoLists: function() {
+        var self = this,
+            list = document.getElementById('todoLists'),
+            dropdown = document.getElementById('todoDropdown'),
             listTemplate = document.getElementById('todoListTemplate').innerHTML,
-            todoEl = document.createElement('div'),
-            tabs = todo.tabs;
-        todoEl.setAttribute('class', 'todo');
-        todoEl.setAttribute('id', todo.id);
+            dropdownTemplate = document.getElementById('todoDropdownTemplate').innerHTML;
 
-        Mustache.parse(listTemplate); // cache template
+        // empty elements
+        list.innerHTML = '';
+        dropdown.innerHTML = '';
 
-        todoData = {
-            id: todo.id,
-            name: todo.name,
-            tabs: [],
-            hasAlarm: function() {
-                return todo.dueDate ? true : false;
-            },
-            alarm: function() {
-                return TODOTabs.Helpers.formatDate(todo.dueDate, todo.dueTime);
+        // cache templates
+        Mustache.parse(listTemplate);
+        Mustache.parse(dropdownTemplate);
+
+        TODOTabs.TodoList.getAllTodos(function(todos) {
+            if (!Object.keys(todos).length) {
+                // no todos, show "no todos" message
+                self.displayNoTodosMsg();
+                return;
+            } else {
+                self.removeNoTodosMsg();
             }
-        };
 
-        // add tab to todoData
-        tabs.forEach(function(tab) {
-            todoData.tabs.push({
-                id: tab.id,
-                title: decodeURI(tab.title),
-                domain: tab.url.split('/')[2],
-                completedClass: (tab.complete) ? 'completed' : '',
-                checked: (tab.complete) ? 'checked="checked"' : ''
-            });
+            var todoLists = [],
+                todoDropdowns = [];
+
+            for (id in todos) {
+                var todo = todos[id];
+
+                // list
+                var todoListData = {
+                    todoId: todo.id,
+                    name: todo.name,
+                    tabs: [],
+                    hasAlarm: function() {
+                        return todo.dueDate ? true : false;
+                    },
+                    alarm: function() {
+                        return TODOTabs.Helpers.formatDate(todo.dueDate, todo.dueTime);
+                    }
+                };
+
+                // adds tab to todoData
+                todo.tabs.forEach(function(tab) {
+                    todoListData.tabs.push({
+                        id: tab.id,
+                        title: decodeURI(tab.title),
+                        domain: tab.url.split('/')[2],
+                        completedClass: (tab.complete) ? 'completed' : '',
+                        checked: (tab.complete) ? 'checked="checked"' : ''
+                    });
+                });
+
+                todoLists.push(todoListData);
+
+                // dropdown
+                todoDropdowns.push({ id: todo.id, name: todo.name });
+            }
+
+            list.innerHTML = Mustache.render(listTemplate, { todoLists: todoLists });
+            dropdown.innerHTML = Mustache.render(dropdownTemplate, { todoDropdowns: todoDropdowns });
+
+            self.showLastViewedTodo();
         });
-
-        todoEl.innerHTML = Mustache.render(listTemplate, todoData);
-        lists.insertBefore(todoEl, lists.firstChild);
     },
 
     renderSettings: function() {
@@ -182,5 +174,19 @@ TODOTabs.View = {
             // select proper "repeat" option
             document.querySelector('#todoRepeat option[value="' + todo.repeat + '"]').setAttribute('selected', 'selected');
         });
+    },
+
+    // no todos message
+    // TODO: should this be in Helpers?
+    displayNoTodosMsg: function () {
+        document.getElementById('actionsWrapper').style.display = 'none';
+        document.getElementById('todoLists').style.display = 'none';
+        document.getElementById('noTodos').style.display = 'block';
+    },
+
+    removeNoTodosMsg: function () {
+        document.getElementById('actionsWrapper').style.display = 'block';
+        document.getElementById('todoLists').style.display = 'block';
+        document.getElementById('noTodos').style.display = 'none';
     }
 };

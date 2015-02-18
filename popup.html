@@ -54,30 +54,34 @@
 
 <!-- templates -->
 <script id="todoListTemplate" type="x-mustache-template">
-    {{ #hasAlarm }}
-    <div class="pull-right alarm">
-        {{ alarm }}
-        <i class="fa fa-bell"></i><span class="sr-only">Alarm</span>
+    {{ #todoLists }}
+    <div class="todo" id="{{ todoId }}">
+        {{ #hasAlarm }} <div class="pull-right alarm"> {{ alarm }} <i class="fa fa-bell"></i><span class="sr-only">Alarm</span> </div> {{ /hasAlarm }}
+        <h3>{{ name }}</h3>
+        <ul>
+            {{ #tabs }}
+            <li id="{{ id }}" class="{{ completedClass }}">
+                <div class="item-actions">
+                    <a href="#">
+                        <span class="sr-only">Remove Item</span>
+                        <i class="remove fa fa-times-circle-o fa-lg"></i>
+                    </a>
+                </div>
+                <label for="todoStatus" class="sr-only">Todo Status</label>
+                <input type="checkbox" class="status" id="todoStatus" {{ checked }} />
+                <a class="title" href="#">{{ title }}</a>
+                <p class="note">{{ domain }}</p>
+            </li>
+            {{ /tabs }}
+        </ul>
     </div>
-    {{ /hasAlarm }}
+    {{ /todoLists }}
+</script>
 
-    <h3>{{ name }}</h3>
-    <ul>
-        {{ #tabs }}
-        <li id="{{ id }}" class="{{ completedClass }}">
-            <div class="item-actions">
-                <a href="#">
-                    <span class="sr-only">Remove Item</span>
-                    <i class="remove fa fa-times-circle-o fa-lg"></i>
-                </a>
-            </div>
-            <label for="todoStatus" class="sr-only">Todo Status</label>
-            <input type="checkbox" class="status" id="todoStatus" {{ checked }} />
-            <a class="title" href="#">{{ title }}</a>
-            <p class="note">{{ domain }}</p>
-        </li>
-        {{ /tabs }}
-    </ul>
+<script id="todoDropdownTemplate" type="x-mustache-template">
+    {{ #todoDropdowns }}
+    <option value="{{ id }}">{{ name }}</option>
+    {{ /todoDropdowns }}
 </script>
 
 <script id="todoSettingsTemplate" type="x-mustache-template">

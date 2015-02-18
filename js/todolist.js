@@ -25,7 +25,6 @@ TODOTabs.TodoList = {
                 return;
             }
 
-            TODOTabs.View.addTodoList(Todo);
             self.saveTodo(Todo);
         });
     },
@@ -34,6 +33,7 @@ TODOTabs.TodoList = {
         this.getAllTodos(function(todos) {
             todos[todo.id] = todo; // add new todo to existing set
             chrome.storage.sync.set(todos, function() {
+                TODOTabs.View.renderTodoLists();
                 TODOTabs.Helpers.showAlert('success', 'Todo saved');
             });
         })
@@ -42,8 +42,8 @@ TODOTabs.TodoList = {
     deleteTodo: function() {
         var currentItemId = TODOTabs.TodoList.getCurrentTodoId();
         chrome.storage.sync.remove(currentItemId, function() {
+            TODOTabs.View.renderTodoLists();
             TODOTabs.Helpers.showAlert('success', 'Todo deleted');
-            TODOTabs.View.removeTodoList(currentItemId);
         });
     },
 
@@ -110,7 +110,7 @@ TODOTabs.TodoList = {
                 todo = todos[id],
                 newDueDate = document.querySelector('#todoSettings #todoDueDate').value,
                 newDueTime = document.querySelector('#todoSettings #todoDueTime').value,
-                alarmDateTime = Date.parse(newDueDate + 'T' + newDueTime);
+                alarmDateTime = Date.parse(newDueDate + 'T' + newDueTime); // "1982-10-26T13:26"
 
             todo.name = document.querySelector('#todoSettings #todoName').value;
             todo.repeat = document.querySelector('#todoSettings #todoRepeat').value;
@@ -118,8 +118,9 @@ TODOTabs.TodoList = {
             todo.dueDate = newDueDate;
             todo.dueTime = newDueTime;
 
-            TODOTabs.Helpers.closeTodoSettings();
-            TODOTabs.TodoList.saveTodo(todo);
+            TODOTabs.View.renderTodoLists();      // re-render todos
+            TODOTabs.Helpers.closeTodoSettings(); // close settings
+            TODOTabs.TodoList.saveTodo(todo);     // save todo
 
             // set alarm
             if (newDueDate) {

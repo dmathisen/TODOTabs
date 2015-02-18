@@ -1,31 +1,6 @@
 var TODOTabs = TODOTabs || {};
 
 TODOTabs.Init = {
-    populateHtml: function() {
-        TODOTabs.TodoList.getAllTodos(function(todos) {
-            // if no todos saved, display message and return
-            if (!Object.keys(todos).length) {
-                TODOTabs.View.displayNoTodosMsg();
-                return;
-            }
-
-            // for each todo, build html and add to dropdown
-            for (var id in todos) {
-                if (todos.hasOwnProperty(id)) {
-                    TODOTabs.View.addTodoList(todos[id], true);
-                }
-            }
-
-            // show either last viewed todo or first one
-            var lastViewedTodo = localStorage.getItem('TODOTabsLastViewed');
-            if (lastViewedTodo) {
-                TODOTabs.View.showLastViewedTodo();
-            } else {
-                TODOTabs.View.showTodoByIndex(0);
-            }
-        });
-    },
-
     setupActions: function() {
         // todo list
         var todoLists = document.getElementById('todoLists');
@@ -59,7 +34,7 @@ TODOTabs.Init = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-    TODOTabs.Init.populateHtml();
+    TODOTabs.View.renderTodoLists();
     TODOTabs.Init.setupActions();
 
     // TODO
