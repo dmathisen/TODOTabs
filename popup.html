@@ -8,34 +8,39 @@
 <body>
 
 <div class="main-popup">
-    <h1>TODOTabs <span>Your lists</span></h1>
+    <div class="top clearfix">
+        <h1>TODOTabs</h1>
 
-    <!-- actions wrapper -->
-    <div class="actions-wrapper" id="actionsWrapper">
-        <!-- actions -->
-        <div class="todo-actions">
-            <a href="#" id="openTodoSettings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
-            <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
+        <!-- actions wrapper -->
+        <div class="actions-wrapper">
+            <a href="#" id="createTodo"><i class="fa fa-plus-square fa-2x"></i><span class="sr-only">New Todo List</span></a>
+
+            <div id="listActions">
+                <!-- dropdown -->
+                <label class="sr-only" for="todoDropdown">Your lists</label>
+                <select id="todoDropdown" class="todo-dropdown"></select>
+
+                <!-- actions -->
+                <div class="todo-actions">
+                    <a href="#" id="openTodoTabs"><i class="fa fa-external-link fa-lg"></i><span class="sr-only">Open all todo items</span></a>
+                    <a href="#" id="openTodoSettings"><i class="fa fa-cog fa-lg"></i><span class="sr-only">Settings</span></a>
+                    <a href="#" id="deleteTodo"><i class="fa fa-trash fa-lg"></i><span class="sr-only">Delete</span></a>
+                </div>
+            </div>
         </div>
-
-        <!-- dropdown -->
-        <label class="sr-only" for="todoDropdown">Your lists</label>
-        <select id="todoDropdown" class="todo-dropdown"></select>
-
-        <a href="#" id="openTodoTabs"><i class="fa fa-external-link-square fa-lg"></i><span class="sr-only">Open all todo items</span></a>
     </div>
 
     <!-- no todos found -->
     <div class="no-todos" id="noTodos">
         <p><strong>First time user?</strong></p>
-        <p>Start by opening a few tabs and clicking "New Todo List"</p>
+        <p>Start by opening a few tabs and clicking the red + button.</p>
     </div>
 
     <!-- lists -->
     <div class="todo-lists" id="todoLists"></div>
 
     <!-- new todo btn -->
-    <button id="createTodo" class="btn btn-primary">New Todo List</button>
+    <!--<button id="createTodo" class="btn btn-primary">New Todo List</button>-->
 </div>
 
 <!-- alerts -->
@@ -68,9 +73,9 @@
                     </a>
                 </div>
                 <label for="todoStatus" class="sr-only">Todo Status</label>
-                <input type="checkbox" class="status" id="todoStatus" {{ checked }} />
-                <a class="title" href="#">{{ title }}</a>
-                <p class="note">{{ domain }}</p>
+                <input class="todo-item-status" id="todoStatus" type="checkbox" {{ checked }} />
+                <p class="todo-item-title"><img src="{{ favIconUrl }}" alt=""> <a href="#">{{ title }}</a></p>
+                <p class="todo-item-url note">{{ domain }}</p>
             </li>
             {{ /tabs }}
         </ul>

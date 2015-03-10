@@ -132,7 +132,8 @@ TODOTabs.View = {
                     todoListData.tabs.push({
                         id: tab.id,
                         title: decodeURI(tab.title),
-                        domain: tab.url.split('/')[2],
+                        domain: tab.url.split('/')[2].replace('www.', ''),
+                        favIconUrl: tab.favIconUrl,
                         completedClass: (tab.complete) ? 'completed' : '',
                         checked: (tab.complete) ? 'checked="checked"' : ''
                     });
@@ -179,13 +180,13 @@ TODOTabs.View = {
     // no todos message
     // TODO: should this be in Helpers?
     displayNoTodosMsg: function () {
-        document.getElementById('actionsWrapper').style.display = 'none';
+        document.getElementById('listActions').style.display = 'none';
         document.getElementById('todoLists').style.display = 'none';
         document.getElementById('noTodos').style.display = 'block';
     },
 
     removeNoTodosMsg: function () {
-        document.getElementById('actionsWrapper').style.display = 'block';
+        document.getElementById('listActions').style.display = 'inline-block';
         document.getElementById('todoLists').style.display = 'block';
         document.getElementById('noTodos').style.display = 'none';
     }

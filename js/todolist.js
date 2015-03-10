@@ -10,10 +10,11 @@ TODOTabs.TodoList = {
         TODOTabs.Helpers.getTabs(function(tabs) {
             tabs.forEach(function (tab) {
                 // add tabs to Todo (don't store incognito or new tabs)
-                if (!tab.incognito && tab.title !== "New Tab") {
+                if (!tab.incognito) {
                     Todo.addTab({
                         id: tab.id,
                         title: tab.title,
+                        favIconUrl: tab.favIconUrl,
                         url: tab.url,
                         complete: false
                     });
@@ -59,8 +60,6 @@ TODOTabs.TodoList = {
                     return index;
                 }
             }).filter(isFinite);
-
-            var one = 1;
         });
 
     },
@@ -162,14 +161,15 @@ TODOTabs.TodoList = {
 };
 
 TODOTabs.TodoList.Todo = function(name) {
-    this.name = name || "My List";
+    this.name = name;
     this.id = 'list-' + this.name.replace(/[^\w]/gi, '-'); // TODO: unique ids for all lists?
     this.tabs = [];
-    this.complete = false;
+    this.favIconUrl = '';
     this.dueDate = '';
     this.dueTime = '';
     this.repeat = '';
     this.notes = '';
+    this.complete = false;
 };
 TODOTabs.TodoList.Todo.prototype.addTab = function(tab) {
     this.tabs.push(tab)
