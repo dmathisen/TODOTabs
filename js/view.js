@@ -87,8 +87,8 @@ TODOTabs.View = {
     renderTodoLists: function() {
         var self = this,
             list = document.getElementById('todoLists'),
-            dropdown = document.getElementById('todoDropdown'),
             listTemplate = document.getElementById('todoListTemplate').innerHTML,
+            dropdown = document.getElementById('todoDropdown'),
             dropdownTemplate = document.getElementById('todoDropdownTemplate').innerHTML;
 
         // empty elements
@@ -101,52 +101,20 @@ TODOTabs.View = {
 
         TODOTabs.TodoList.getAllTodos(function(todos) {
             if (!Object.keys(todos).length) {
-                // no todos, show "no todos" message
-                self.displayNoTodosMsg();
+                self.displayNoTodosMsg(); // no todos, show "no todos" message
                 return;
             } else {
                 self.removeNoTodosMsg();
             }
 
-            var todoLists = [],
-                todoDropdowns = [];
-
+            // turn todos object in to indexed array
+            var todoLists = [];
             for (id in todos) {
-                var todo = todos[id];
-
-                // list
-                var todoListData = {
-                    todoId: todo.id,
-                    name: todo.name,
-                    tabs: [],
-                    hasAlarm: function() {
-                        return todo.dueDate ? true : false;
-                    },
-                    alarm: function() {
-                        return TODOTabs.Helpers.formatDate(todo.dueDate, todo.dueTime);
-                    }
-                };
-
-                // adds tab to todoData
-                todo.tabs.forEach(function(tab) {
-                    todoListData.tabs.push({
-                        id: tab.id,
-                        title: decodeURI(tab.title),
-                        domain: tab.url.split('/')[2].replace('www.', ''),
-                        favIconUrl: tab.favIconUrl,
-                        completedClass: (tab.complete) ? 'completed' : '',
-                        checked: (tab.complete) ? 'checked="checked"' : ''
-                    });
-                });
-
-                todoLists.push(todoListData);
-
-                // dropdown
-                todoDropdowns.push({ id: todo.id, name: todo.name });
+                todoLists.push(todos[id]);
             }
 
             list.innerHTML = Mustache.render(listTemplate, { todoLists: todoLists });
-            dropdown.innerHTML = Mustache.render(dropdownTemplate, { todoDropdowns: todoDropdowns });
+            dropdown.innerHTML = Mustache.render(dropdownTemplate, { todoLists: todoLists });
 
             self.showLastViewedTodo();
         });
@@ -161,24 +129,15 @@ TODOTabs.View = {
 
             Mustache.parse(settingsTemplate); // cache template
 
-            todoData = {
-                name: todo.name,
-                dueDate: todo.dueDate,
-                dueTime: todo.dueTime,
-                repeat: todo.repeat,
-                notes: todo.notes
-            };
-
             // render template
-            settingsEl.innerHTML = Mustache.render(settingsTemplate, todoData);
+            settingsEl.innerHTML = Mustache.render(settingsTemplate, todo);
 
             // select proper "repeat" option
             document.querySelector('#todoRepeat option[value="' + todo.repeat + '"]').setAttribute('selected', 'selected');
         });
     },
 
-    // no todos message
-    // TODO: should this be in Helpers?
+    // "no todos" message
     displayNoTodosMsg: function () {
         document.getElementById('listActions').style.display = 'none';
         document.getElementById('todoLists').style.display = 'none';

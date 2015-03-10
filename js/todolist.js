@@ -11,17 +11,18 @@ TODOTabs.TodoList = {
             tabs.forEach(function (tab) {
                 // add tabs to Todo (don't store incognito or new tabs)
                 if (!tab.incognito) {
-                    Todo.addTab({
-                        id: tab.id,
+                    Todo.addItem({
+                        itemId: tab.id,
                         title: tab.title,
                         favIconUrl: tab.favIconUrl,
                         url: tab.url,
+                        domain: tab.url.split('/')[2].replace('www.', ''),
                         complete: false
                     });
                 }
             });
 
-            if (!Todo.tabs.length) {
+            if (!Todo.items.length) {
                 TODOTabs.Helpers.showAlert('error', 'You must have at least 1 tab open');
                 return;
             }
@@ -116,6 +117,7 @@ TODOTabs.TodoList = {
             todo.notes = document.querySelector('#todoSettings #todoNotes').value;
             todo.dueDate = newDueDate;
             todo.dueTime = newDueTime;
+            todo.formattedDate = TODOTabs.Helpers.formatDate(newDueDate, newDueTime);
 
             TODOTabs.View.renderTodoLists();      // re-render todos
             TODOTabs.Helpers.closeTodoSettings(); // close settings
@@ -163,16 +165,16 @@ TODOTabs.TodoList = {
 TODOTabs.TodoList.Todo = function(name) {
     this.name = name;
     this.id = 'list-' + this.name.replace(/[^\w]/gi, '-'); // TODO: unique ids for all lists?
-    this.tabs = [];
-    this.favIconUrl = '';
+    this.items = [];
     this.dueDate = '';
     this.dueTime = '';
+    this.formattedDate = '';
     this.repeat = '';
     this.notes = '';
     this.complete = false;
 };
-TODOTabs.TodoList.Todo.prototype.addTab = function(tab) {
-    this.tabs.push(tab)
+TODOTabs.TodoList.Todo.prototype.addItem = function(item) {
+    this.items.push(item);
 };
 TODOTabs.TodoList.Todo.prototype.createTodo = function(name) {
     return new TODOTabs.TodoList.Todo(name);

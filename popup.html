@@ -60,33 +60,30 @@
 <!-- templates -->
 <script id="todoListTemplate" type="x-mustache-template">
     {{ #todoLists }}
-    <div class="todo" id="{{ todoId }}">
-        {{ #hasAlarm }} <div class="pull-right alarm"> {{ alarm }} <i class="fa fa-bell"></i><span class="sr-only">Alarm</span> </div> {{ /hasAlarm }}
+    <div class="todo" id="{{ id }}">
+        {{ #dueDate }} <div class="pull-right alarm"> {{ formattedDate }} <i class="fa fa-bell"></i><span class="sr-only">Alarm</span> </div> {{ /dueDate }}
         <h3>{{ name }}</h3>
         <ul>
-            {{ #tabs }}
-            <li id="{{ id }}" class="{{ completedClass }}">
+            {{ #items }}
+            <li id="{{ itemId }}" {{ #complete }} class="complete" {{ /complete }}>
                 <div class="item-actions">
-                    <a href="#">
-                        <span class="sr-only">Remove Item</span>
-                        <i class="remove fa fa-times-circle-o fa-lg"></i>
-                    </a>
+                    <a href="#"><span class="sr-only">Remove Item</span><i class="remove fa fa-times-circle-o fa-lg"></i></a>
                 </div>
                 <label for="todoStatus" class="sr-only">Todo Status</label>
-                <input class="todo-item-status" id="todoStatus" type="checkbox" {{ checked }} />
+                <input class="todo-item-status" id="todoStatus" type="checkbox" {{ #complete }} checked="checked" {{ /complete }} />
                 <p class="todo-item-title"><img src="{{ favIconUrl }}" alt=""> <a href="#">{{ title }}</a></p>
                 <p class="todo-item-url note">{{ domain }}</p>
             </li>
-            {{ /tabs }}
+            {{ /items }}
         </ul>
     </div>
     {{ /todoLists }}
 </script>
 
 <script id="todoDropdownTemplate" type="x-mustache-template">
-    {{ #todoDropdowns }}
+    {{ #todoLists }}
     <option value="{{ id }}">{{ name }}</option>
-    {{ /todoDropdowns }}
+    {{ /todoLists }}
 </script>
 
 <script id="todoSettingsTemplate" type="x-mustache-template">
